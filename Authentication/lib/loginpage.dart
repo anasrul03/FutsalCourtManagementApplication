@@ -1,13 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:login_attemp2/components/round_button.dart';
-
 import 'main.dart';
 
 class LoginWidget extends StatefulWidget {
-  const LoginWidget({Key? key}) : super(key: key);
+  final VoidCallback onClickedSignUp;
+
+  const LoginWidget({Key? key, required this.onClickedSignUp}) : super(key: key);
 
   @override
   State<LoginWidget> createState() => _LoginWidgetState();
@@ -122,7 +124,26 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
 
                   SizedBox(height: 20),
-                  RoundedButton(text: "Submit", press: signIn)
+                  RoundedButton(text: "Submit", press: signIn),
+                  SizedBox(height: 20),
+                  RichText(
+                    text: TextSpan(
+                        text: "No Account? ",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                        children: [
+                          TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = widget.onClickedSignUp,
+                              text: 'Sign Up',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary))
+                        ]),
+                  )
                 ],
               ),
             ),

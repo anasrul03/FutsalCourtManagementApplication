@@ -1,18 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:login_attemp2/components/utils.dart';
 
+import 'auth_page.dart';
+import 'components/utils.dart';
 import 'hompage.dart';
-import 'loginpage.dart';
 
 Future main() async {
-  
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   runApp(MyApp());
 }
+
 final navigatorKey = GlobalKey<NavigatorState>();
+
 //testsadasd
 //asdas
 class MyApp extends StatelessWidget {
@@ -20,9 +23,9 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
+  Widget build(BuildContext context) 
+    => MaterialApp(
+      debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
       home: MainPage(),
     );
   }
-}
+
 
 class MainPage extends StatefulWidget {
   MainPage({
@@ -57,7 +60,7 @@ class _MainPageState extends State<MainPage> {
           } else if (snapshot.hasData) {
             return HomePage();
           } else {
-            return LoginWidget();
+            return AuthPage();
           }
         },
       ),
