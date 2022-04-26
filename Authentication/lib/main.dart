@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:login_attemp2/components/utils.dart';
+import 'package:login_attemp2/dashboard.dart';
 
 import 'auth_page.dart';
 import 'components/utils.dart';
@@ -11,7 +12,7 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -58,7 +59,7 @@ class _MainPageState extends State<MainPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text("Something went wrong!"));
           } else if (snapshot.hasData) {
-            return HomePage();
+            return Dashboard();
           } else {
             return AuthPage();
           }

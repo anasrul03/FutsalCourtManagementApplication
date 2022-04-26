@@ -105,7 +105,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             text: TextSpan(
                 text: "Already have an account? ",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontSize: 18,
                 ),
                 children: [
