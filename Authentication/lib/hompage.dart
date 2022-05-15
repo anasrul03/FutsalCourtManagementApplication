@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+
+//DUMMY PAGE
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 

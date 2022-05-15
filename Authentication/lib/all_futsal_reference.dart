@@ -1,10 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'all_court_reference.dart';
-
 
 //Variable that been shared to other file(allcourt)
 late String direct;
@@ -21,17 +22,17 @@ class AllFutsalState extends State<AllFutsal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    backgroundColor: Colors.black,
+      backgroundColor: Colors.black,
       body: StreamBuilder<List<Futsal>>(
         stream: getFutsalList(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text("Something went wrong! ${snapshot.error} ");
           } else if (snapshot.hasData) {
-            final bookings = snapshot.data!;
+            final futsallist = snapshot.data!;
 
             return ListView(
-              children: bookings.map(buildList).toList(),
+              children: futsallist.map(buildList).toList(),
             );
           } else {
             return Center(child: CircularProgressIndicator());
@@ -43,14 +44,16 @@ class AllFutsalState extends State<AllFutsal> {
 
   Widget buildList(Futsal futsal) => GestureDetector(
       //when clicked it will directed based on database
-      onTap: () {
+      onTap: () async {
+        // Obtain shared preferences.
+        final prefs = await SharedPreferences.getInstance();
+        // Save an String value to 'action' key.
+        await prefs.setString('futsalId', futsal.id);
+        log(futsal.id);
         setState(() {
-
-          //Setting the variable that can change direction court list 
+          //Setting the variable that can change direction court list
           direct = "FutsalList/${futsal.id}/Courts";
           title = futsal.futsalName;
-
-          
         });
         Navigator.push(
           context,
@@ -58,30 +61,34 @@ class AllFutsalState extends State<AllFutsal> {
         );
       },
       child: Card(
-        shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(30.0),
-    ),
-          child: ListTile(
-        leading: CircleAvatar(
-          radius: 20.0,
-          child: ClipRRect(
-            child: Image.network(
-              futsal.cover_image_url,
-              height: 150.0,
-              width: 100.0,
-            ),
-            borderRadius: BorderRadius.circular(50.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
           ),
-        ),
-        title: Text(futsal.futsalName),
-        subtitle: Text(futsal.address),
-      )));
+          child: ListTile(
+            leading: CircleAvatar(
+              radius: 20.0,
+              child: ClipRRect(
+                child: Image.network(
+                  futsal.cover_image_url,
+                  height: 150.0,
+                  width: 100.0,
+                ),
+                borderRadius: BorderRadius.circular(50.0),
+              ),
+            ),
+            title: Text(futsal.futsalName),
+            subtitle: Text(futsal.address),
+          )));
 
   Stream<List<Futsal>> getFutsalList() => FirebaseFirestore.instance
       .collection('FutsalList')
       .snapshots()
-      .map((snapshot) =>
-          snapshot.docs.map((doc) => Futsal.fromJson(doc.data())).toList());
+      .map((snapshot) => snapshot.docs.map((doc) {
+            // inspect(doc.data());
+              // log(doc.id);
+
+            return Futsal.fromJson(doc.data());
+          }).toList());
 }
 
 //class created for every collection in firebase database
@@ -122,5 +129,3 @@ class Futsal {
         id: json['id'],
       );
 }
-
-

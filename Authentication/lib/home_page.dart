@@ -1,10 +1,8 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types
 
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:login_attemp2/all_futsal_reference.dart';
-
 import 'components/futsalCard.dart';
 
 class home_page extends StatefulWidget {
@@ -140,22 +138,7 @@ class _home_pageState extends State<home_page> {
                                     filter: ImageFilter.blur(
                                         sigmaX: 15, sigmaY: 15),
                                     child: Container(
-                                      height: 200,
-                                      width: 200,
-                                      decoration: BoxDecoration(
-                                          gradient: const LinearGradient(
-                                            begin: Alignment.topLeft,
-                                            end: Alignment.bottomCenter,
-                                            colors: [
-                                              Colors.white60,
-                                              Colors.white10
-                                            ],
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          border: Border.all(
-                                              width: 2, color: Colors.white30)),
-                                    ),
+                                       ),
                                   ),
                                 )
                               ],

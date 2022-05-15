@@ -1,17 +1,12 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:login_attemp2/select_court_slot.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'all_futsal_reference.dart' as futsalReference;
-
-import 'all_futsal_reference.dart';
-import 'main.dart';
 
 class AllCourt extends StatefulWidget {
   const AllCourt({Key? key}) : super(key: key);
@@ -29,11 +24,7 @@ class _AllCourtState extends State<AllCourt> {
   void initState() {
     super.initState();
     print(idpath);
-    setState(() {
-
-     
-    });
-
+    setState(() {});
   }
 
   @override
@@ -64,11 +55,13 @@ class _AllCourtState extends State<AllCourt> {
   }
 
   Widget buildList(Court court) => GestureDetector(
-      onTap: () {
-        setState(() {
-          
-        });
-          Navigator.push(
+      onTap: () async {
+        final prefs = await SharedPreferences.getInstance();
+        // Try reading data from the 'action key. If it doesn't exist, returns null.
+        prefs.setString('courtId', court.courtName);
+        log(court.courtName);
+        setState(() {});
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const CourtSlot()),
         );

@@ -9,7 +9,8 @@ import 'main.dart';
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickedSignUp;
 
-  const LoginWidget({Key? key, required this.onClickedSignUp}) : super(key: key);
+  const LoginWidget({Key? key, required this.onClickedSignUp})
+      : super(key: key);
 
   @override
   State<LoginWidget> createState() => _LoginWidgetState();
@@ -36,7 +37,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Colors.blue,
+              Colors.black,
               Colors.purple,
             ],
           ),
@@ -48,103 +49,114 @@ class _LoginWidgetState extends State<LoginWidget> {
           child: Card(
             elevation: 30.0,
             shadowColor: Color(0x55434343),
-            color: Color.fromARGB(255, 79, 91, 225),
+            clipBehavior: Clip.hardEdge,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
-              ),
+              borderRadius: BorderRadius.circular(35.0),
             ),
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  // Image(image: AssetImage("assets/logo.png")),
-                  // Row(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [Container(color: Colors.black)]),
-                  SizedBox(height: 40),
-                  Text(
-                    "Welcome to Courtify",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 26.0,
-                      fontWeight: FontWeight.w600,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Colors.blue,
+                    Colors.purple,
+                  ],
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset(
+                      "lib/assets/images/logo.png",
+                      width: 200,
+                      height: 200,
                     ),
-                  ),
-                  Text(
-                    "Login to book your game!",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                  SizedBox(height: 40),
-                  Material(
-                    elevation: 10.0,
-                    borderRadius: BorderRadius.circular(30.0),
-                    shadowColor: Color(0x55434343),
-                    child: TextField(
-                      textAlign: TextAlign.start,
-                      textAlignVertical: TextAlignVertical.center,
-                      controller: emailController,
-                      cursorColor: Colors.white,
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                        labelText: "Email",
-                        prefixIcon: Icon(
-                          Icons.mail,
-                          color: Colors.black54,
-                        ),
-                        border: InputBorder.none,
+                    SizedBox(height: 40),
+                    Text(
+                      "Welcome to Courtify",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 26.0,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
-                  SizedBox(height: 4),
-                  Material(
-                    elevation: 10.0,
-                    borderRadius: BorderRadius.circular(30.0),
-                    shadowColor: Color(0x55434343),
-                    child: TextField(
-                      textAlign: TextAlign.start,
-                      textAlignVertical: TextAlignVertical.center,
-                      controller: passwordController,
-                      cursorColor: Colors.white,
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                        labelText: "Password",
-                        prefixIcon: Icon(
-                          Icons.lock,
-                          color: Colors.black54,
-                        ),
-                        border: InputBorder.none,
+                    Text(
+                      "Login to book your game!",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
-                  ),
-
-                  SizedBox(height: 20),
-                  RoundedButton(text: "Submit", press: signIn),
-                  SizedBox(height: 20),
-                  RichText(
-                    text: TextSpan(
-                        text: "No Account? ",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                    SizedBox(height: 40),
+                    Material(
+                      elevation: 10.0,
+                      borderRadius: BorderRadius.circular(30.0),
+                      shadowColor: Color(0x55434343),
+                      child: TextField(
+                        textAlign: TextAlign.start,
+                        textAlignVertical: TextAlignVertical.center,
+                        controller: emailController,
+                        cursorColor: Colors.white,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          labelText: "Email",
+                          prefixIcon: Icon(
+                            Icons.mail,
+                            color: Colors.black54,
+                          ),
+                          border: InputBorder.none,
                         ),
-                        children: [
-                          TextSpan(
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = widget.onClickedSignUp,
-                              text: 'Sign Up',
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color:
-                                      Theme.of(context).colorScheme.secondary))
-                        ]),
-                  )
-                ],
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Material(
+                      elevation: 10.0,
+                      borderRadius: BorderRadius.circular(30.0),
+                      shadowColor: Color(0x55434343),
+                      child: TextField(
+                        textAlign: TextAlign.start,
+                        textAlignVertical: TextAlignVertical.center,
+                        controller: passwordController,
+                        cursorColor: Colors.white,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          labelText: "Password",
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: Colors.black54,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    RoundedButton(text: "Submit", press: signIn),
+                    SizedBox(height: 20),
+                    RichText(
+                      text: TextSpan(
+                          text: "No Account? ",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                          children: [
+                            TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = widget.onClickedSignUp,
+                                text: 'Sign Up',
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary))
+                          ]),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

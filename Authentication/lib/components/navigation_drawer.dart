@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
 
-import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../dashboard.dart' as PageIndex;
@@ -14,8 +13,8 @@ class NavigationDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
 
-    final name = "Hanasrullah";
-    final email = "is Logged in";
+
+    final alert = "is Logged in";
 
     return Drawer(
       child: Material(
@@ -24,7 +23,7 @@ class NavigationDrawerWidget extends StatelessWidget {
           children: <Widget>[
             buildHeader(
               name: user.email!,
-              email: email,
+              email: alert,
               onClicked: () {},
             ),
             const SizedBox(height: 30),

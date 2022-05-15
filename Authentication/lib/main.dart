@@ -1,12 +1,10 @@
+import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:login_attemp2/components/utils.dart';
 import 'package:login_attemp2/dashboard.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'auth_page.dart';
-import 'components/utils.dart';
-import 'hompage.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,18 +22,16 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) 
-    => MaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MainPage(),
-    );
-  }
-
+  Widget build(BuildContext context) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        navigatorKey: navigatorKey,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MainPage(),
+      );
+}
 
 class MainPage extends StatefulWidget {
   MainPage({
@@ -47,6 +43,12 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  setUserId(String? userId) async {
+    final prefs = await SharedPreferences.getInstance();
+    // Try reading data from the 'action' key. If it doesn't exist, returns null.
+    prefs.setString('userId', userId!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +61,9 @@ class _MainPageState extends State<MainPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text("Something went wrong!"));
           } else if (snapshot.hasData) {
+            log(snapshot.data!.uid);
+            // Store userId in local Phone Storage
+            setUserId(snapshot.data!.uid);
             return Dashboard();
           } else {
             return AuthPage();

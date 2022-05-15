@@ -35,17 +35,22 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      
       padding: EdgeInsets.all(16),
       child: Form(
         key: formKey,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           SizedBox(height: 60),
-          FlutterLogo(size: 120),
+          Image.asset(
+            "lib/assets/images/logo.png",
+            width: 200,
+            height: 200,
+          ),
           SizedBox(height: 20),
           Text(
             "Sign Up your account",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 40),
           Material(
