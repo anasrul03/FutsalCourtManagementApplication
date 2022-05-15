@@ -5,6 +5,8 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'bookedlist.dart';
+
 // ignore: camel_case_types
 class booking_page extends StatefulWidget {
   const booking_page({Key? key}) : super(key: key);
@@ -18,27 +20,28 @@ class _booking_pageState extends State<booking_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: StreamBuilder<List<Book>>(
-        stream: getBookedList(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            inspect(snapshot.error);
+        backgroundColor: Color.fromARGB(0, 75, 251, 219), body: BookedList()
 
-            return Text("Something went wrong! ${snapshot.error} ");
-          } else if (snapshot.hasData) {
-            log('has data');
-            final bookedlist = snapshot.data!;
+        // StreamBuilder<List<Book>>(
+        //   stream: getBookedList(),
+        //   builder: (context, snapshot) {
+        //     if (snapshot.hasError) {
+        //       inspect(snapshot.error);
 
-            return ListView(
-              children: bookedlist.map(buildLists).toList(),
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-    );
+        //       return Text("Something went wrong! ${snapshot.error} ");
+        //     } else if (snapshot.hasData) {
+        //       log('has data');
+        //       final bookedlist = snapshot.data!;
+
+        //       return ListView(
+        //         children: bookedlist.map(buildLists).toList(),
+        //       );
+        //     } else {
+        //       return Center(child: CircularProgressIndicator());
+        //     }
+        //   },
+        // ),
+        );
   }
 
   Widget buildLists(Book bookData) => GestureDetector(
@@ -51,7 +54,7 @@ class _booking_pageState extends State<booking_page> {
           child: ListTile(
             // leading: Image.network(
             //     "https://yt3.ggpht.com/ytc/AKedOLTgR4UeiRqyy3zdHFHpSGKgu5xCYSeeMGxv5cxBUA=s900-c-k-c0x00ffffff-no-rj"),
-            title: Text('You have booked court '+bookData.courtId),
+            title: Text('You have booked court ' + bookData.courtId),
             subtitle: Text(bookData.endDate.toString()),
           )));
 
@@ -60,7 +63,7 @@ class _booking_pageState extends State<booking_page> {
       .snapshots()
       .map((snapshot) => snapshot.docs.map((doc) {
             log(doc.id);
-// log('called getBookedList ');
+            // log('called getBookedList ');
             return Book.fromJson(doc.data());
           }).toList());
 }

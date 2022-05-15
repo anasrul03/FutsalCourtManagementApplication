@@ -4,12 +4,14 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:login_attemp2/selectcourtpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'all_court_reference.dart';
 
 //Variable that been shared to other file(allcourt)
 late String direct;
 String title = '';
+String imageurl = '';
 
 class AllFutsal extends StatefulWidget {
   const AllFutsal({Key? key}) : super(key: key);
@@ -19,6 +21,7 @@ class AllFutsal extends StatefulWidget {
 }
 
 class AllFutsalState extends State<AllFutsal> {
+  double height = 72, width = 110;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,38 +57,53 @@ class AllFutsalState extends State<AllFutsal> {
           //Setting the variable that can change direction court list
           direct = "FutsalList/${futsal.id}/Courts";
           title = futsal.futsalName;
+          imageurl = futsal.cover_image_url;
         });
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const AllCourt()),
+          MaterialPageRoute(builder: (context) => const SelectCourt()),
         );
       },
-      child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          child: ListTile(
-            leading: CircleAvatar(
-              radius: 20.0,
-              child: ClipRRect(
-                child: Image.network(
-                  futsal.cover_image_url,
-                  height: 150.0,
-                  width: 100.0,
+      child: Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: Stack(
+          children: [
+            Card(
+                color: Colors.blueGrey[900],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-                borderRadius: BorderRadius.circular(50.0),
-              ),
+                child: ListTile(
+                  selectedTileColor: Colors.white,
+                  leading: SizedBox(height: height, width: width - 7),
+                  title: Text(futsal.futsalName,
+                      style: TextStyle(color: Colors.white)),
+                  subtitle: Text(futsal.address,
+                      style: TextStyle(color: Colors.white60, fontSize: 10)),
+                )),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: ClipRRect(
+                  child: Image.network(
+                    futsal.cover_image_url,
+                    height: height,
+                    width: width,
+                    fit: BoxFit.fill,
+                  ),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(4),
+                      bottomLeft: Radius.circular(4))),
             ),
-            title: Text(futsal.futsalName),
-            subtitle: Text(futsal.address),
-          )));
+          ],
+        ),
+      ));
 
   Stream<List<Futsal>> getFutsalList() => FirebaseFirestore.instance
       .collection('FutsalList')
       .snapshots()
       .map((snapshot) => snapshot.docs.map((doc) {
             // inspect(doc.data());
-              // log(doc.id);
+            // log(doc.id);
 
             return Futsal.fromJson(doc.data());
           }).toList());

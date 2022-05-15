@@ -16,8 +16,10 @@ class _home_pageState extends State<home_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: Colors.black,
-      body: Padding(
+      body: 
+      Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -88,10 +90,10 @@ class _home_pageState extends State<home_page> {
                       ],
                     ),
                     SizedBox(
-                      height: 20.0,
+                      height: 5.0,
                     ),
                     Container(
-                      height: 400.0,
+                      height: 434.0,
                       child: TabBarView(
                         children: [
                           //First index(TABS)
@@ -137,8 +139,7 @@ class _home_pageState extends State<home_page> {
                                   child: BackdropFilter(
                                     filter: ImageFilter.blur(
                                         sigmaX: 15, sigmaY: 15),
-                                    child: Container(
-                                       ),
+                                    child: Container(),
                                   ),
                                 )
                               ],

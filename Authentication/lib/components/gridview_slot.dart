@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:login_attemp2/components/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../dashboard.dart';
+
 class SlotGrid extends StatefulWidget {
   final DateTime? selectedDate;
 
@@ -121,8 +123,10 @@ class _SlotGridState extends State<SlotGrid> {
     inspect(data);
     try {
       final bookedDate = FirebaseFirestore.instance.collection('Booked').doc();
-
       await bookedDate.set(data);
+      currentIndex = 2;
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Dashboard()));
     } on FirebaseAuthException catch (e) {
       print(e);
 

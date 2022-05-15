@@ -13,12 +13,11 @@ class NavigationDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
 
-
     final alert = "is Logged in";
 
     return Drawer(
       child: Material(
-        color: Colors.blue,
+        color: Colors.blueGrey[900],
         child: ListView(
           children: <Widget>[
             buildHeader(

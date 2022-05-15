@@ -2,26 +2,25 @@
 
 import 'package:flutter/material.dart';
 
-
 import 'booking_page.dart';
 import 'components/navigation_drawer.dart';
 import 'favorite_page.dart';
 import 'help_page.dart';
 import 'home_page.dart';
 
- // this is the index for the bottomNavigationBar
-  int currentIndex = 0;
-  // this is the screen based on the selected index on BottomNavigationBar
-   final screens = [
-    //Index = 0
-    home_page(),
-    //Index = 1
-    favorite_page(),
-    //Index = 2
-    booking_page(),
-    //Index = 3
-    help_page(),
-  ];
+// this is the index for the bottomNavigationBar
+int currentIndex = 0;
+// this is the screen based on the selected index on BottomNavigationBar
+final screens = [
+  //Index = 0
+  home_page(),
+  //Index = 1
+  favorite_page(),
+  //Index = 2
+  booking_page(),
+  //Index = 3
+  help_page(),
+];
 
 void main() {
   runApp(MaterialApp(
@@ -37,7 +36,6 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +45,7 @@ class _DashboardState extends State<Dashboard> {
         elevation: 0.0,
         backgroundColor: Colors.black,
         title: Row(
-          children: [
-            
-          ],
+          children: [],
         ),
       ),
       body: IndexedStack(

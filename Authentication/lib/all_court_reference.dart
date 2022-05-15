@@ -29,27 +29,22 @@ class _AllCourtState extends State<AllCourt> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Container(
-        child: StreamBuilder<List<Court>>(
-          stream: readUsers(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Text("Something went wrong! ${snapshot.error} ");
-            } else if (snapshot.hasData) {
-              final bookings = snapshot.data!;
-              return Container(
-                  child: ListView(
-                children: bookings.map(buildList).toList(),
-              ));
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: StreamBuilder<List<Court>>(
+        stream: readUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text("Something went wrong! ${snapshot.error} ");
+          } else if (snapshot.hasData) {
+            final bookings = snapshot.data!;
+            return ListView(
+              children: bookings.map(buildList).toList(),
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }
@@ -66,18 +61,24 @@ class _AllCourtState extends State<AllCourt> {
           MaterialPageRoute(builder: (context) => const CourtSlot()),
         );
       },
-      child: Card(
-          child: ListTile(
-        leading: CircleAvatar(
-          radius: 20.0,
-          child: ClipRRect(
-            child: Text(court.courtName),
-            borderRadius: BorderRadius.circular(50.0),
-          ),
-        ),
-        title: Text(court.courtType),
-        subtitle: Text("RM${court.price} per Hour"),
-      )));
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 3.0),
+        child: Card(
+            color: Colors.blueGrey[900],
+            child: ListTile(
+              leading: CircleAvatar(
+                radius: 20.0,
+                child: ClipRRect(
+                  child: Text(court.courtName),
+                  borderRadius: BorderRadius.circular(50.0),
+                ),
+              ),
+              title:
+                  Text(court.courtType, style: TextStyle(color: Colors.white)),
+              subtitle: Text("RM${court.price} per Hour",
+                  style: TextStyle(color: Colors.white60)),
+            )),
+      ));
 
   Stream<List<Court>> readUsers() => FirebaseFirestore.instance
       .collection(idpath)
