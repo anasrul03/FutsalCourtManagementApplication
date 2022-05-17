@@ -20,7 +20,56 @@ class _booking_pageState extends State<booking_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(0, 75, 251, 219), body: BookedList()
+        backgroundColor: Colors.black,
+        body: Column(
+          children: [
+            Stack(
+              textDirection: TextDirection.ltr,
+              children: [
+                ShaderMask(
+                  shaderCallback: (rect) {
+                    return LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Colors.black, Colors.transparent],
+                    ).createShader(Rect.fromLTRB(0, 0, rect.width, 180));
+                  },
+                  blendMode: BlendMode.dstIn,
+                  child: Image.network(
+                      "https://fcylf.es/wp-content/uploads/2020/10/maxresdefault.jpg",
+                      fit: BoxFit.cover,
+                      height: 200,
+                      width: double.infinity),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      SizedBox(height: 120),
+                      Text("Recent Bookings",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.w600,
+                          )),
+                      SizedBox(height: 7),
+                      Text("Make sure you has made a booking",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w300,
+                          )),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Flexible(child: BookedList()),
+          ],
+        )
 
         // StreamBuilder<List<Book>>(
         //   stream: getBookedList(),

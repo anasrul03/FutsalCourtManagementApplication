@@ -25,6 +25,7 @@ class AllFutsalState extends State<AllFutsal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       backgroundColor: Colors.black,
       body: StreamBuilder<List<Futsal>>(
         stream: getFutsalList(),
@@ -35,6 +36,7 @@ class AllFutsalState extends State<AllFutsal> {
             final futsallist = snapshot.data!;
 
             return ListView(
+              
               children: futsallist.map(buildList).toList(),
             );
           } else {
@@ -74,6 +76,7 @@ class AllFutsalState extends State<AllFutsal> {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: ListTile(
+                  
                   selectedTileColor: Colors.white,
                   leading: SizedBox(height: height, width: width - 7),
                   title: Text(futsal.futsalName,

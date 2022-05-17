@@ -67,12 +67,17 @@ class _AllCourtState extends State<AllCourt> {
             color: Colors.blueGrey[900],
             child: ListTile(
               leading: CircleAvatar(
+                backgroundColor: Colors.white,
                 radius: 20.0,
                 child: ClipRRect(
-                  child: Text(court.courtName),
+                  child: Text(court.courtName,
+                      style: TextStyle(
+                        color: Colors.black,
+                      )),
                   borderRadius: BorderRadius.circular(50.0),
                 ),
               ),
+              trailing: Icon(Icons.arrow_forward, color: Colors.white),
               title:
                   Text(court.courtType, style: TextStyle(color: Colors.white)),
               subtitle: Text("RM${court.price} per Hour",

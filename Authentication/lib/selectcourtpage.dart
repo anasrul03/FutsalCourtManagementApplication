@@ -18,8 +18,10 @@ class _SelectCourtState extends State<SelectCourt> {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-            backgroundColor: Colors.blueGrey[800],
-            title: Text(futsalReference.title)),
+          backgroundColor: Colors.blueGrey[800],
+          title: Text(futsalReference.title),
+          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.favorite))],
+        ),
         body: Column(
           children: [
             Stack(
@@ -40,14 +42,23 @@ class _SelectCourtState extends State<SelectCourt> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
-                      SizedBox(height: 150),
+                      SizedBox(height: 130),
                       Text("Select your perfect Court",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 26.0,
+                            fontSize: 30.0,
                             fontWeight: FontWeight.w600,
+                          )),
+                      SizedBox(height: 7),
+                      Text("Every court has a different price per hour",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w300,
                           )),
                     ],
                   ),

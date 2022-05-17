@@ -16,15 +16,14 @@ class _home_pageState extends State<home_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Colors.black,
-      body: 
-      Padding(
+      body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 20),
             //Let's start by adding the text
             Text(
               "Welcome Courtify",
@@ -92,8 +91,7 @@ class _home_pageState extends State<home_page> {
                     SizedBox(
                       height: 5.0,
                     ),
-                    Container(
-                      height: 434.0,
+                    Expanded(
                       child: TabBarView(
                         children: [
                           //First index(TABS)

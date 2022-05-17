@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:login_attemp2/userProfile_page.dart';
 
 import 'booking_page.dart';
 import 'components/navigation_drawer.dart';
@@ -20,6 +22,8 @@ final screens = [
   booking_page(),
   //Index = 3
   help_page(),
+  //Index = 4
+  UserProfile(),
 ];
 
 void main() {
@@ -40,13 +44,24 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue,
-      drawer: NavigationDrawerWidget(),
+      // drawer: NavigationDrawerWidget(),
       appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Courtify",
+              style: GoogleFonts.lato(),
+            ),
+            SizedBox(width: 3),
+            Icon(
+              Icons.sports_soccer,
+              color: Colors.blue,
+            ),
+          ],
+        ),
         elevation: 0.0,
         backgroundColor: Colors.black,
-        title: Row(
-          children: [],
-        ),
       ),
       body: IndexedStack(
         //this indexedstack will keep the state when you directed to another page.
@@ -76,6 +91,10 @@ class _DashboardState extends State<Dashboard> {
           BottomNavigationBarItem(
             icon: Icon(Icons.help),
             label: "Help",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_rounded),
+            label: "Account",
           ),
         ],
       ),

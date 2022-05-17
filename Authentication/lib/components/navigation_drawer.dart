@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../dashboard.dart' as PageIndex;
 import '../dashboard.dart';
+import '../userProfile_page.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   NavigationDrawerWidget({Key? key}) : super(key: key);
@@ -23,7 +24,12 @@ class NavigationDrawerWidget extends StatelessWidget {
             buildHeader(
               name: user.email!,
               email: alert,
-              onClicked: () {},
+              onClicked: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const UserProfile()),
+                );
+              },
             ),
             const SizedBox(height: 30),
             buildMenuItem(

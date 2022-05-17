@@ -48,8 +48,11 @@ class _BookedListState extends State<BookedList> {
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: ListTile(
-              // leading: Image.network(
-              //     "https://yt3.ggpht.com/ytc/AKedOLTgR4UeiRqyy3zdHFHpSGKgu5xCYSeeMGxv5cxBUA=s900-c-k-c0x00ffffff-no-rj"),
+              leading: Icon(
+                Icons.assignment_outlined,
+                color: Colors.white,
+                size: 30,
+              ),
               title: Text(
                 'You have booked court ' + bookData.courtId,
                 style: TextStyle(
