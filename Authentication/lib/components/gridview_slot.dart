@@ -60,38 +60,46 @@ class _SlotGridState extends State<SlotGrid> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: 600,
-          width: double.infinity,
-          child: GridView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-              crossAxisSpacing: 5.0,
-              mainAxisSpacing: 5.0,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: Container(
+            height: 600,
+            width: double.infinity,
+            child: GridView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 5.0,
+              ),
+              itemCount: 24,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  child: Card(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                    color: selectedCard == index ? Colors.blue : Colors.white,
+                    child:
+                        Center(child: Text(dateTimeToHours(SlotTime[index]))),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      // ontap of each card, set the defined int to the grid view index
+                      selectedCard = index;
+                    });
+                    startDateTime = DateTime(
+                        widget.selectedDate!.year,
+                        widget.selectedDate!.month,
+                        widget.selectedDate!.day,
+                        SlotTime[index]!.hour,
+                        SlotTime[index]!.minute);
+                  },
+                );
+              },
             ),
-            itemCount: 24,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                child: Card(
-                  color: selectedCard == index ? Colors.blue : Colors.white,
-                  child: Center(child: Text(dateTimeToHours(SlotTime[index]))),
-                ),
-                onTap: () {
-                  setState(() {
-                    // ontap of each card, set the defined int to the grid view index
-                    selectedCard = index;
-                  });
-                  startDateTime = DateTime(
-                      widget.selectedDate!.year,
-                      widget.selectedDate!.month,
-                      widget.selectedDate!.day,
-                      SlotTime[index]!.hour,
-                      SlotTime[index]!.minute);
-                },
-              );
-            },
           ),
         ),
         SizedBox(height: 10),

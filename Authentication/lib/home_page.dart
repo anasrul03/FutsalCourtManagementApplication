@@ -3,6 +3,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:login_attemp2/all_futsal_reference.dart';
+import 'package:login_attemp2/promotion_page.dart';
 import 'components/futsalCard.dart';
 
 class home_page extends StatefulWidget {
@@ -23,10 +24,10 @@ class _home_pageState extends State<home_page> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 0),
             //Let's start by adding the text
             Text(
-              "Welcome Courtify",
+              "Welcome Futsal Player",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 26.0,
@@ -34,7 +35,7 @@ class _home_pageState extends State<home_page> {
               ),
             ),
             Text(
-              "Pick your futsal court",
+              "Book your futsal arena",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20.0,
@@ -42,7 +43,7 @@ class _home_pageState extends State<home_page> {
               ),
             ),
             SizedBox(
-              height: 20.0,
+              height: 40.0,
             ),
             //Now let's add some elevation to our text field
             //to do this we need to wrap it in a Material widget
@@ -97,28 +98,8 @@ class _home_pageState extends State<home_page> {
                           //First index(TABS)
                           AllFutsal(),
                           //tabs 2
-                          Container(
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                //Here you can add what ever you want
-                                futsalCard(
-                                  'https://image.made-in-china.com/2f0j00BYofzQNhRupa/Indoor-Polypropylene-Plastic-Futsal-Court-Flooring.jpg',
-                                  "New Court Opening Promo!",
-                                  "50% price for first 50 slots!",
-                                ),
-                                futsalCard(
-                                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxatQ590PrbCGYyyfupSzIBOg-DpDiqC4KQw&usqp=CAU',
-                                  "Crazy Ramadan Promo!",
-                                  "Get your slot more than 1 hour!",
-                                ),
-                                futsalCard(
-                                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmApLeN6riQBrlsQnsaYhh5pQ7tWo_UBbaHA&usqp=CAU',
-                                  "Adizero is Back on Promotion!",
-                                  "Free 1 hour if you book on 21st May!",
-                                ),
-                              ],
-                            ),
+                          PromotionList(
+                             
                           ),
                           //tabs 3
                           Container(

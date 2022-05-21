@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_const_constructors
 
 import 'dart:developer';
 
@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:login_attemp2/select_court_slot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'all_futsal_reference.dart' as futsalReference;
+
+String courtTitle = '';
 
 class AllCourt extends StatefulWidget {
   const AllCourt({Key? key}) : super(key: key);
@@ -23,7 +25,7 @@ class _AllCourtState extends State<AllCourt> {
   @override
   void initState() {
     super.initState();
-    print(idpath);
+    // print(idpath);
     setState(() {});
   }
 
@@ -54,8 +56,12 @@ class _AllCourtState extends State<AllCourt> {
         final prefs = await SharedPreferences.getInstance();
         // Try reading data from the 'action key. If it doesn't exist, returns null.
         prefs.setString('courtId', court.courtName);
+        final Map<String, dynamic> data = new Map<String, dynamic>();
+        data['courtId'] = prefs.getString('courtId');
+
         log(court.courtName);
         setState(() {});
+        courtTitle = court.courtName;
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const CourtSlot()),

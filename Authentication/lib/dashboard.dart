@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:login_attemp2/userProfile_page.dart';
 
 import 'booking_page.dart';
-import 'components/navigation_drawer.dart';
+
 import 'favorite_page.dart';
 import 'help_page.dart';
 import 'home_page.dart';
@@ -46,6 +46,7 @@ class _DashboardState extends State<Dashboard> {
       backgroundColor: Colors.blue,
       // drawer: NavigationDrawerWidget(),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

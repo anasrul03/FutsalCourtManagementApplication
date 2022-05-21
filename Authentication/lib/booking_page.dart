@@ -69,28 +69,7 @@ class _booking_pageState extends State<booking_page> {
             ),
             Flexible(child: BookedList()),
           ],
-        )
-
-        // StreamBuilder<List<Book>>(
-        //   stream: getBookedList(),
-        //   builder: (context, snapshot) {
-        //     if (snapshot.hasError) {
-        //       inspect(snapshot.error);
-
-        //       return Text("Something went wrong! ${snapshot.error} ");
-        //     } else if (snapshot.hasData) {
-        //       log('has data');
-        //       final bookedlist = snapshot.data!;
-
-        //       return ListView(
-        //         children: bookedlist.map(buildLists).toList(),
-        //       );
-        //     } else {
-        //       return Center(child: CircularProgressIndicator());
-        //     }
-        //   },
-        // ),
-        );
+        ));
   }
 
   Widget buildLists(Book bookData) => GestureDetector(

@@ -23,7 +23,7 @@ class _BookedListState extends State<BookedList> {
 
             return Text("Something went wrong! ${snapshot.error} ");
           } else if (snapshot.hasData) {
-            log('has data');
+            
             final bookedlist = snapshot.data!;
 
             return ListView(
@@ -69,7 +69,7 @@ class _BookedListState extends State<BookedList> {
       .collection('Booked')
       .snapshots()
       .map((snapshot) => snapshot.docs.map((doc) {
-            log(doc.id);
+            // log(doc.id);
             // log('called getBookedList ');
             return Book.fromJson(doc.data());
           }).toList());

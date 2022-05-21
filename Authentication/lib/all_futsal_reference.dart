@@ -1,12 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:developer';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:login_attemp2/selectcourtpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'all_court_reference.dart';
 
 //Variable that been shared to other file(allcourt)
 late String direct;
@@ -54,7 +53,7 @@ class AllFutsalState extends State<AllFutsal> {
         final prefs = await SharedPreferences.getInstance();
         // Save an String value to 'action' key.
         await prefs.setString('futsalId', futsal.id);
-        log(futsal.id);
+        
         setState(() {
           //Setting the variable that can change direction court list
           direct = "FutsalList/${futsal.id}/Courts";
