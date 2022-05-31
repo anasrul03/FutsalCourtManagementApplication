@@ -57,15 +57,16 @@ class _PaymentState extends State<Payment> {
     data['futsalId'] = prefs.getString('futsalId');
     data['courtId'] = prefs.getString('courtId');
     data['futsalTitle'] = prefs.getString('futsalTitle');
-    data['bookId'] = "inspect(data)";
+
+    // data['bookId'] = "inspect(data)";
 
     final bookedDate = FirebaseFirestore.instance
         .collection('UserData')
         .doc(user.email)
         .collection("Booked")
-        .doc();
-    await bookedDate.set(data);
+        .doc()
+        .set(data);
 
-
+    // bookedDate.id;
   }
 }

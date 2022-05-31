@@ -23,6 +23,8 @@ class _LoginWidgetState extends State<LoginWidget> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  bool isObscure = true;
+
   @override
   void dispose() {
     emailController.dispose();
@@ -117,6 +119,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       borderRadius: BorderRadius.circular(15.0),
                       shadowColor: Color(0x55434343),
                       child: TextFormField(
+                        obscureText: isObscure,
                         textAlign: TextAlign.start,
                         textAlignVertical: TextAlignVertical.center,
                         controller: passwordController,
@@ -127,6 +130,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                           prefixIcon: Icon(
                             Icons.lock,
                             color: Colors.black54,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(isObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                            onPressed: () {
+                              isObscure
+                                  ? setState(() => isObscure = false)
+                                  : setState(() => isObscure = true);
+                            },
                           ),
                           border: InputBorder.none,
                         ),
@@ -169,7 +182,8 @@ class _LoginWidgetState extends State<LoginWidget> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
+      builder: (context) =>
+          Center(child: CircularProgressIndicator(color: Colors.white)),
     );
 
     try {
