@@ -1,12 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'all_court_reference.dart';
 import 'all_futsal_reference.dart' as futsalReference;
 
 class SelectCourt extends StatefulWidget {
-  const SelectCourt({Key? key}) : super(key: key);
+  final String futsalIdFav;
+  final String futsalTitle;
+  final String futsalAddress;
+  const SelectCourt(
+      {Key? key, required this.futsalIdFav, required this.futsalAddress, required this.futsalTitle})
+      : super(key: key);
 
   @override
   State<SelectCourt> createState() => _SelectCourtState();
@@ -20,7 +27,14 @@ class _SelectCourtState extends State<SelectCourt> {
         appBar: AppBar(
           backgroundColor: Colors.blueGrey[800],
           title: Text(futsalReference.title),
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.favorite))],
+          actions: [
+            IconButton(
+                tooltip: "Like!",
+                onPressed: () {
+                  Favorite(widget.futsalIdFav);
+                },
+                icon: Icon(Icons.favorite))
+          ],
         ),
         body: Column(
           children: [
@@ -70,5 +84,41 @@ class _SelectCourtState extends State<SelectCourt> {
             ),
           ],
         ));
+  }
+
+  // ignore: non_constant_identifier_names
+  Future Favorite(String futsalIdFav) async {
+    setState(() {});
+    try {
+      final user = FirebaseAuth.instance.currentUser!;
+
+      FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(user.email)
+          .collection("Favorite")
+          .doc(futsalIdFav)
+          .set({
+        "userId": user.uid,
+        "futsalId": futsalIdFav,
+        "directory": futsalReference.direct,
+        "imageURL": futsalReference.imageurl,
+        "address": widget.futsalAddress,
+        "futsalTitle": widget.futsalTitle
+      });
+      print(futsalIdFav);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.blue,
+        content: Text("Added to favorite"),
+        duration: Duration(milliseconds: 100),
+      ));
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      // print("already registered");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Text("Your email already registered !!"),
+        duration: Duration(seconds: 3),
+      ));
+    }
   }
 }

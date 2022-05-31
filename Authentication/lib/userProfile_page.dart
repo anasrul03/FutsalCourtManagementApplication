@@ -2,6 +2,8 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:login_attemp2/userProfile_edit.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -20,7 +22,7 @@ class _UserProfileState extends State<UserProfile> {
       backgroundColor: Colors.black,
       body: Center(
           child: SingleChildScrollView(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(10),
               child: Column(children: <Widget>[
                 Stack(
                   children: [
@@ -49,48 +51,49 @@ class _UserProfileState extends State<UserProfile> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              SizedBox(height: 200.0),
+                              SizedBox(height: 190),
                               // ignore: prefer_const_constructors
-                              Text(
-                                "Login to book your game!",
-                                // ignore: prefer_const_constructors
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w300,
-                                ),
+                              Column(
+                                children: [
+                                  Text("Anas Rul",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                      textAlign: TextAlign.start),
+                                  SizedBox(height: 10),
+                                  Text("+013-24552313",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20)),
+                                ],
                               ),
+
                               SizedBox(height: heightSpace),
                               Card(
-                                child: ListTile(
-                                  leading: Icon(Icons.account_box_rounded),
-                                  title: Text('My Account'),
-                                  trailing: Icon(Icons.arrow_forward),
+                                child: GestureDetector(
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProfileEdit())),
+                                  child: ListTile(
+                                    leading: Icon(Icons.edit),
+                                    title: Text('Edit my account'),
+                                    trailing: Icon(Icons.arrow_forward),
+                                  ),
                                 ),
                               ),
+
                               SizedBox(height: heightSpace),
-                              Card(
-                                child: ListTile(
-                                  leading: Icon(Icons.edit),
-                                  title: Text('Edit my account'),
-                                  trailing: Icon(Icons.arrow_forward),
-                                ),
-                              ),
-                              SizedBox(height: heightSpace),
-                              Card(
-                                child: ListTile(
-                                  leading: Icon(Icons.help_center),
-                                  title: Text('Help Center'),
-                                  trailing: Icon(Icons.arrow_forward),
-                                ),
-                              ),
-                              SizedBox(height: heightSpace),
-                              Card(
-                                color: Colors.red,
-                                child: ListTile(
-                                  title: Center(
-                                    child: Text('Log out',
-                                        style: TextStyle(color: Colors.white)),
+                              GestureDetector(
+                                onTap: () => FirebaseAuth.instance.signOut(),
+                                child: Card(
+                                  color: Colors.red,
+                                  child: ListTile(
+                                    title: Center(
+                                      child: Text('Log out',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -118,9 +121,18 @@ class _UserProfileState extends State<UserProfile> {
                             padding: const EdgeInsets.only(top: 50.0),
                             child: Column(
                               children: [
-                                CircleAvatar(radius: 50),
-                                SizedBox(height: 20),
-                                Text(user.email!)
+                                CircleAvatar(
+                                    radius: 50,
+                                    child: Icon(
+                                      Icons.person,
+                                      size: 50,
+                                    )),
+                                SizedBox(height: 11),
+                                // Text(user.uid, style: GoogleFonts.lato()),
+                                Text(user.email!,
+                                    style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold))
                               ],
                             ),
                           )),

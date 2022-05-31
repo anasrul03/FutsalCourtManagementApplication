@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types
 
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:login_attemp2/all_futsal_reference.dart';
 import 'package:login_attemp2/promotion_page.dart';
-import 'components/futsalCard.dart';
+import 'package:login_attemp2/tournament.dart';
+// import 'components/futsalCard.dart';
 
 class home_page extends StatefulWidget {
   const home_page({Key? key}) : super(key: key);
@@ -24,7 +26,7 @@ class _home_pageState extends State<home_page> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 0),
+           
             //Let's start by adding the text
             Text(
               "Welcome Futsal Player",
@@ -98,32 +100,9 @@ class _home_pageState extends State<home_page> {
                           //First index(TABS)
                           AllFutsal(),
                           //tabs 2
-                          PromotionList(
-                             
-                          ),
+                          PromotionList(),
                           //tabs 3
-                          Container(
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://media.istockphoto.com/photos/football-futsal-ball-goal-and-floor-indoor-soccer-sports-hall-sport-picture-id1198313297?k=20&m=1198313297&s=612x612&w=0&h=N7JPfxpLNw9DYHcH3xkc_fY8Wx4QGSQfRYwWwl46YRY="),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(25),
-                                  child: BackdropFilter(
-                                    filter: ImageFilter.blur(
-                                        sigmaX: 15, sigmaY: 15),
-                                    child: Container(),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+                          TournamentList(),
                         ],
                       ),
                     ),
@@ -135,5 +114,41 @@ class _home_pageState extends State<home_page> {
         ),
       ),
     );
+  }
+
+  // Stream<userInfo> getUserInfo() => FirebaseFirestore.instance
+  //     .collection('UserData')
+  //     .snapshots()
+  //     .map((snapshot) => snapshot.docs.map((doc) {
+  //           return userInfo.fromJson(doc.data());
+  //         }));
+}
+
+class userInfo {
+  final String email;
+  final String phoneNumber;
+  final String nickname;
+  final String userId;
+
+  userInfo(
+      {required this.email,
+      required this.phoneNumber,
+      required this.nickname,
+      required this.userId});
+
+  static userInfo fromJson(Map<String, dynamic> json) => userInfo(
+        email: json['email'],
+        phoneNumber: json['phoneNumber'],
+        nickname: json['nickname'],
+        userId: json['userId'],
+      );
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['email'] = this.email;
+    data['phoneNumber'] = this.phoneNumber;
+    data['nickname'] = this.nickname;
+    data['userId'] = this.userId;
+    return data;
   }
 }

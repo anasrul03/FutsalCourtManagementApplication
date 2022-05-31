@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:login_attemp2/components/round_button.dart';
 import 'main.dart';
+import '../dashboard.dart' as PageIndex;
 
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickedSignUp;
@@ -17,6 +19,7 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
+  final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -32,19 +35,10 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Colors.black,
-              Colors.purple,
-            ],
-          ),
-        ),
+        color: Color.fromARGB(255, 47, 47, 47),
         child: Center(
             child: SingleChildScrollView(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.symmetric(vertical: 19, horizontal: 10),
           //Card is over here!
           child: Card(
             elevation: 30.0,
@@ -60,7 +54,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   end: Alignment.bottomLeft,
                   colors: [
                     Colors.blue,
-                    Colors.purple,
+                    Colors.blueGrey,
                   ],
                 ),
               ),
@@ -74,7 +68,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       width: 200,
                       height: 200,
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 20),
                     Text(
                       "Welcome to Courtify",
                       style: TextStyle(
@@ -84,19 +78,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                       ),
                     ),
                     Text(
-                      "Login to book your game!",
+                      "Login to book your game",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.0,
                         fontWeight: FontWeight.w300,
                       ),
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 20),
                     Material(
                       elevation: 10.0,
-                      borderRadius: BorderRadius.circular(30.0),
+                      borderRadius: BorderRadius.circular(15.0),
                       shadowColor: Color(0x55434343),
-                      child: TextField(
+                      child: TextFormField(
                         textAlign: TextAlign.start,
                         textAlignVertical: TextAlignVertical.center,
                         controller: emailController,
@@ -110,14 +104,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                           ),
                           border: InputBorder.none,
                         ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (email) =>
+                            email != null && !EmailValidator.validate(email)
+                                ? 'Enter a valid email!'
+                                : null,
                       ),
                     ),
                     SizedBox(height: 4),
                     Material(
                       elevation: 10.0,
-                      borderRadius: BorderRadius.circular(30.0),
+                      borderRadius: BorderRadius.circular(15.0),
                       shadowColor: Color(0x55434343),
-                      child: TextField(
+                      child: TextFormField(
                         textAlign: TextAlign.start,
                         textAlignVertical: TextAlignVertical.center,
                         controller: passwordController,
@@ -134,7 +133,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    RoundedButton(text: "Submit", press: signIn),
+                    RoundedButton(text: "Log in", press: signIn),
                     SizedBox(height: 20),
                     RichText(
                       text: TextSpan(
@@ -150,9 +149,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 text: 'Sign Up',
                                 style: TextStyle(
                                     decoration: TextDecoration.underline,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary))
+                                    color: Colors.blue[200]))
                           ]),
                     )
                   ],
@@ -165,6 +162,10 @@ class _LoginWidgetState extends State<LoginWidget> {
 
 //text
   Future signIn() async {
+    setState(() {
+      PageIndex.currentIndex = 0;
+    });
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -176,8 +177,18 @@ class _LoginWidgetState extends State<LoginWidget> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.green,
+        content: Text("Successfully Logged as " + emailController.text.trim()),
+        duration: Duration(seconds: 1),
+      ));
     } on FirebaseAuthException catch (e) {
-      print(e);
+      print("Wrong password");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Text("Your input correct email and password !!"),
+        duration: Duration(seconds: 3),
+      ));
     }
 
     navigatorKey.currentState!.popUntil((route) => route.isFirst);

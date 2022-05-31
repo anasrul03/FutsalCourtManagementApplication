@@ -60,7 +60,7 @@ class _AllCourtState extends State<AllCourt> {
         data['courtId'] = prefs.getString('courtId');
 
         log(court.courtName);
-        setState(() {});
+      ;
         courtTitle = court.courtName;
         Navigator.push(
           context,

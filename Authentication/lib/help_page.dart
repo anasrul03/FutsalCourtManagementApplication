@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
@@ -12,6 +14,9 @@ class help_page extends StatefulWidget {
 
 // ignore: camel_case_types
 class _help_pageState extends State<help_page> {
+  final bookingIdController = TextEditingController();
+  final descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +48,8 @@ class _help_pageState extends State<help_page> {
               Material(
                 borderRadius: BorderRadius.circular(23.0),
                 shadowColor: Color(0x55434343),
-                child: TextField(
+                child: TextFormField(
+                  controller: bookingIdController,
                   textAlign: TextAlign.start,
                   textAlignVertical: TextAlignVertical.center,
                   decoration: InputDecoration(
@@ -60,7 +66,8 @@ class _help_pageState extends State<help_page> {
               Material(
                 borderRadius: BorderRadius.circular(23.0),
                 shadowColor: Color(0x55434343),
-                child: TextField(
+                child: TextFormField(
+                  controller: descriptionController,
                   textAlign: TextAlign.start,
                   textAlignVertical: TextAlignVertical.center,
                   decoration: InputDecoration(
@@ -85,7 +92,9 @@ class _help_pageState extends State<help_page> {
                             vertical: 17, horizontal: 20),
                         backgroundColor: Colors.blue,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        sendReport(bookingIdController, descriptionController);
+                      },
                       child: Text("Submit",
                           style:
                               TextStyle(fontSize: 16.0, color: Colors.white)),
@@ -96,5 +105,54 @@ class _help_pageState extends State<help_page> {
             ]),
       ),
     );
+  }
+
+  Future sendReport(TextEditingController bookingIdController,
+      TextEditingController descriptionController) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser!;
+
+      FirebaseFirestore.instance.collection('ReportList').doc().set({
+        "createdDate": DateTime.now(),
+        "bookingID": bookingIdController.text.trim(),
+        "description": descriptionController.text.trim(),
+        "userId": user.uid,
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.green,
+        content: Text("Successfully send report"),
+        duration: Duration(seconds: 3),
+      ));
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      // print("already registered");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Text("Your email already registered !!"),
+        duration: Duration(seconds: 3),
+      ));
+    }
+  }
+}
+
+class Report {
+  final String bookingID;
+  final String issue;
+  final String userId;
+
+  Report({required this.bookingID, required this.issue, required this.userId});
+
+  static Report fromJson(Map<String, dynamic> json) => Report(
+      bookingID: json['bookingID'],
+      issue: json['issue'],
+      userId: json['userId']);
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['bookingID'] = this.bookingID;
+    data['issue'] = this.issue;
+    data['userId'] = this.userId;
+
+    return data;
   }
 }

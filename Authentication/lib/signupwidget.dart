@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../dashboard.dart' as PageIndex;
 
 import 'components/round_button.dart';
 import 'components/utils.dart';
@@ -23,6 +26,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final nicknameController = TextEditingController();
 
   @override
   void dispose() {
@@ -34,8 +39,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print("Sign up page");
     return SingleChildScrollView(
-      
       padding: EdgeInsets.all(16),
       child: Form(
         key: formKey,
@@ -76,6 +81,57 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   email != null && !EmailValidator.validate(email)
                       ? 'Enter a valid email!'
                       : null,
+            ),
+          ),
+          SizedBox(height: 4),
+          Material(
+            elevation: 10.0,
+            borderRadius: BorderRadius.circular(30.0),
+            shadowColor: Color(0x55434343),
+            child: TextFormField(
+              textAlign: TextAlign.start,
+              textAlignVertical: TextAlignVertical.center,
+              controller: nicknameController,
+              cursorColor: Colors.white,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                labelText: "Nickname",
+                prefixIcon: Icon(
+                  Icons.title,
+                  color: Colors.black54,
+                ),
+                border: InputBorder.none,
+              ),
+              // autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (nikcname) =>
+                  nikcname == null ? "Please enter your nickname" : null,
+            ),
+          ),
+          SizedBox(height: 4),
+          Material(
+            elevation: 10.0,
+            borderRadius: BorderRadius.circular(30.0),
+            shadowColor: Color(0x55434343),
+            child: TextFormField(
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
+              textAlign: TextAlign.start,
+              textAlignVertical: TextAlignVertical.center,
+              controller: phoneNumberController,
+              cursorColor: Colors.white,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(
+                labelText: "Phone Number",
+                prefixIcon: Icon(
+                  Icons.phone,
+                  color: Colors.black54,
+                ),
+                border: InputBorder.none,
+              ),
+              validator: (value) =>
+                  value == null ? 'Enter your phone number please' : null,
             ),
           ),
           SizedBox(height: 4),
@@ -129,6 +185,10 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   }
 
   Future signUp() async {
+    setState(() {
+      PageIndex.currentIndex = 0;
+    });
+
     final isValid = formKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -143,10 +203,30 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
+      final user = FirebaseAuth.instance.currentUser!;
+
+      FirebaseFirestore.instance
+          .collection('UserData')
+          .doc(emailController.text.trim())
+          .set({
+        "email": emailController.text.trim(),
+        "phoneNumber": phoneNumberController.text.trim(),
+        "nickname": nicknameController.text.trim(),
+        "userId": user.uid,
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.green,
+        content: Text("Successfully registered"),
+        duration: Duration(seconds: 3),
+      ));
     } on FirebaseAuthException catch (e) {
       print(e);
-
-      Utils.showSnackBar(e.message);
+      // print("already registered");
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Text("Your email already registered !!"),
+        duration: Duration(seconds: 3),
+      ));
     }
 
     // Navigator.of(context) not working!

@@ -1,7 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:login_attemp2/selectcourtpage.dart';
@@ -21,10 +19,10 @@ class AllFutsal extends StatefulWidget {
 
 class AllFutsalState extends State<AllFutsal> {
   double height = 72, width = 110;
+  late Icon loveIcon = Icon(Icons.favorite_outline, color: Colors.white);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       backgroundColor: Colors.black,
       body: StreamBuilder<List<Futsal>>(
         stream: getFutsalList(),
@@ -35,7 +33,6 @@ class AllFutsalState extends State<AllFutsal> {
             final futsallist = snapshot.data!;
 
             return ListView(
-              
               children: futsallist.map(buildList).toList(),
             );
           } else {
@@ -52,17 +49,24 @@ class AllFutsalState extends State<AllFutsal> {
         // Obtain shared preferences.
         final prefs = await SharedPreferences.getInstance();
         // Save an String value to 'action' key.
+        await prefs.setString('futsalTitle', futsal.futsalName);
         await prefs.setString('futsalId', futsal.id);
-        
+
         setState(() {
           //Setting the variable that can change direction court list
           direct = "FutsalList/${futsal.id}/Courts";
+
           title = futsal.futsalName;
           imageurl = futsal.cover_image_url;
         });
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const SelectCourt()),
+          MaterialPageRoute(
+              builder: (context) => SelectCourt(
+                    futsalIdFav: futsal.id,
+                    futsalAddress: futsal.address,
+                    futsalTitle: futsal.futsalName,
+                  )),
         );
       },
       child: Padding(
@@ -75,7 +79,6 @@ class AllFutsalState extends State<AllFutsal> {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: ListTile(
-                  
                   selectedTileColor: Colors.white,
                   leading: SizedBox(height: height, width: width - 7),
                   title: Text(futsal.futsalName,

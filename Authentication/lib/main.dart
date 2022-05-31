@@ -1,4 +1,5 @@
-import 'dart:developer';
+// ignore_for_file: avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -61,11 +62,15 @@ class _MainPageState extends State<MainPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text("Something went wrong!"));
           } else if (snapshot.hasData) {
-            log(snapshot.data!.uid);
+            print("Directing to Dashboard");
+            print("User id is " + snapshot.data!.uid);
+
+            // log(snapshot.data!.uid);
             // Store userId in local Phone Storage
             setUserId(snapshot.data!.uid);
             return Dashboard();
           } else {
+            print("Re-directing to AuthPage");
             return AuthPage();
           }
         },

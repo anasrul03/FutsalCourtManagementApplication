@@ -47,6 +47,7 @@ dependencies:
   shared_preferences: ^2.0.15
   google_fonts: ^2.3.2
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -71,6 +72,7 @@ flutter:
   assets:
     - lib/assets/images/logo.png
     - lib/assets/images/ball.png
+    - lib/assets/images/dummyQR.png
 
   # To add assets to your application, add an assets section, like this:
   

@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:login_attemp2/components/utils.dart';
+import 'package:login_attemp2/payment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../dashboard.dart';
@@ -60,20 +62,20 @@ class _SlotGridState extends State<SlotGrid> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: Container(
-            height: 600,
-            width: double.infinity,
+        Container(
+          color: Colors.black,
+          height: 360,
+          width: double.infinity,
+          child: SingleChildScrollView(
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
-                crossAxisSpacing: 10.0,
+                crossAxisSpacing: 4.0,
                 mainAxisSpacing: 5.0,
               ),
-              itemCount: 24,
+              itemCount: SlotTime.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   child: Card(
@@ -102,9 +104,29 @@ class _SlotGridState extends State<SlotGrid> {
             ),
           ),
         ),
-        SizedBox(height: 10),
-        TextButton(
-            child: Text("text"), onPressed: () => sendDateTime(startDateTime))
+        SizedBox(height: 30),
+        Container(
+            child: Center(
+          child: ElevatedButton(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ))),
+            onPressed: () {
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => Payment(
+
+              //             )));
+              sendDateTime(startDateTime);
+            },
+            child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Proceed", style: GoogleFonts.lato(fontSize: 20))),
+          ),
+        )),
       ],
     );
   }
@@ -115,30 +137,39 @@ class _SlotGridState extends State<SlotGrid> {
 
   sendDateTime(startDateTime) async {
     final prefs = await SharedPreferences.getInstance();
-    // Try reading data from the 'action' key. If it doesn't exist, returns null.
 
     var endDateTime = startDateTime.add(Duration(hours: 1));
+
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['startDate'] = this.startDateTime;
     data['endDate'] = endDateTime;
+    data['createdDate'] = DateTime.now().toString();
     data['userId'] = prefs.getString('userId');
     data['futsalId'] = prefs.getString('futsalId');
     data['courtId'] = prefs.getString('courtId');
 
-    print(data);
 
-    log(startDateTime.toString());
-    inspect(data);
+
+    // log(startDateTime.toString());
+    // inspect(data);
     try {
-      final bookedDate = FirebaseFirestore.instance.collection('Booked').doc();
-      await bookedDate.set(data);
-      currentIndex = 2;
+      // final bookedDate = FirebaseFirestore.instance.collection('Booked').doc();
+      // await bookedDate.set(data);
+      // currentIndex = 2;
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => Dashboard()));
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Dashboard()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => Payment(
+                    getData: startDateTime,
+                  )));
     } on FirebaseAuthException catch (e) {
       print(e);
 
       Utils.showSnackBar(e.message);
     }
+    
   }
+  
 }

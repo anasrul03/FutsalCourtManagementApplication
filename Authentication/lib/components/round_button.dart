@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class RoundedButton extends StatelessWidget {
   final String text;
   final VoidCallback press;
@@ -9,7 +8,8 @@ class RoundedButton extends StatelessWidget {
     Key? key,
     required this.text,
     this.color = Colors.blue,
-    this.textColor = Colors.white,required this.press,
+    this.textColor = Colors.white,
+    required this.press,
   }) : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class RoundedButton extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 10),
       width: size.width * 0.5,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(29),
+        borderRadius: BorderRadius.circular(20),
         child: TextButton(
           style: TextButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 20),
