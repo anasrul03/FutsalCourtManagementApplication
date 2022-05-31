@@ -47,6 +47,7 @@ dependencies:
   shared_preferences: ^2.0.15
   google_fonts: ^2.3.2
   qr_flutter: ^4.0.0
+  flutter_credit_card: ^3.0.1
 
 
 dev_dependencies:
@@ -74,6 +75,9 @@ flutter:
     - lib/assets/images/logo.png
     - lib/assets/images/ball.png
     - lib/assets/images/dummyQR.png
+    - lib/assets/images/mastercard.png
+    - lib/assets/images/card_bg.png
+    - lib/assets/images/bg.png
 
   # To add assets to your application, add an assets section, like this:
   

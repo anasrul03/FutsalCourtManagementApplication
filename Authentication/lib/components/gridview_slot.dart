@@ -10,6 +10,7 @@ import 'package:login_attemp2/payment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../dashboard.dart';
+import '../paymenttest.dart';
 
 class SlotGrid extends StatefulWidget {
   final DateTime? selectedDate;
@@ -148,8 +149,6 @@ class _SlotGridState extends State<SlotGrid> {
     data['futsalId'] = prefs.getString('futsalId');
     data['courtId'] = prefs.getString('courtId');
 
-
-
     // log(startDateTime.toString());
     // inspect(data);
     try {
@@ -161,15 +160,11 @@ class _SlotGridState extends State<SlotGrid> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => Payment(
-                    getData: startDateTime,
-                  )));
+              builder: (context) => MySample(getData: startDateTime)));
     } on FirebaseAuthException catch (e) {
       print(e);
 
       Utils.showSnackBar(e.message);
     }
-    
   }
-  
 }
