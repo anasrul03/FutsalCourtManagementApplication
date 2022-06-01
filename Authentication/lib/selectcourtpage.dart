@@ -5,15 +5,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'all_court_reference.dart';
-import 'all_futsal_reference.dart' as futsalReference;
 
 class SelectCourt extends StatefulWidget {
   final String futsalIdFav;
   final String futsalTitle;
   final String futsalAddress;
-  const SelectCourt(
-      {Key? key, required this.futsalIdFav, required this.futsalAddress, required this.futsalTitle})
-      : super(key: key);
+  final String imageurl;
+  const SelectCourt({
+    Key? key,
+    required this.futsalIdFav,
+    required this.futsalAddress,
+    required this.futsalTitle,
+    required this.imageurl,
+  }) : super(key: key);
 
   @override
   State<SelectCourt> createState() => _SelectCourtState();
@@ -26,7 +30,7 @@ class _SelectCourtState extends State<SelectCourt> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Colors.blueGrey[800],
-          title: Text(futsalReference.title),
+          title: Text(widget.futsalTitle),
           actions: [
             IconButton(
                 tooltip: "Like!",
@@ -50,7 +54,7 @@ class _SelectCourtState extends State<SelectCourt> {
                     ).createShader(Rect.fromLTRB(0, 0, rect.width, 190));
                   },
                   blendMode: BlendMode.dstIn,
-                  child: Image.network(futsalReference.imageurl,
+                  child: Image.network(widget.imageurl,
                       fit: BoxFit.fill, height: 200, width: double.infinity),
                 ),
                 Padding(
@@ -80,7 +84,11 @@ class _SelectCourtState extends State<SelectCourt> {
               ],
             ),
             Flexible(
-              child: AllCourt(),
+              child: AllCourt(
+                futsalId: widget.futsalIdFav,
+                futsalTitle: widget.futsalTitle,
+                imageURL: widget.imageurl,
+              ),
             ),
           ],
         ));
@@ -88,7 +96,6 @@ class _SelectCourtState extends State<SelectCourt> {
 
   // ignore: non_constant_identifier_names
   Future Favorite(String futsalIdFav) async {
-    setState(() {});
     try {
       final user = FirebaseAuth.instance.currentUser!;
 
@@ -100,8 +107,7 @@ class _SelectCourtState extends State<SelectCourt> {
           .set({
         "userId": user.uid,
         "futsalId": futsalIdFav,
-        "directory": futsalReference.direct,
-        "imageURL": futsalReference.imageurl,
+        "imageURL": widget.imageurl,
         "address": widget.futsalAddress,
         "futsalTitle": widget.futsalTitle
       });

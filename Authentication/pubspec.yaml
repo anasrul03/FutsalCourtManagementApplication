@@ -29,6 +29,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+
 # Validator for email
   email_validator: ^2.0.1
   flutter:
@@ -48,6 +49,8 @@ dependencies:
   google_fonts: ^2.3.2
   qr_flutter: ^4.0.0
   flutter_credit_card: ^3.0.1
+  searchfield: ^0.6.5
+  flutter_neumorphic: ^3.2.0
 
 
 dev_dependencies:
@@ -78,6 +81,7 @@ flutter:
     - lib/assets/images/mastercard.png
     - lib/assets/images/card_bg.png
     - lib/assets/images/bg.png
+    - lib/assets/images/email.png
 
   # To add assets to your application, add an assets section, like this:
   

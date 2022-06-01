@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:login_attemp2/help_page.dart';
 import 'package:login_attemp2/userProfile_edit.dart';
 
 class UserProfile extends StatefulWidget {
@@ -78,6 +79,19 @@ class _UserProfileState extends State<UserProfile> {
                                   child: ListTile(
                                     leading: Icon(Icons.edit),
                                     title: Text('Edit my account'),
+                                    trailing: Icon(Icons.arrow_forward),
+                                  ),
+                                ),
+                              ),
+                              Card(
+                                child: GestureDetector(
+                                  onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => help_page())),
+                                  child: ListTile(
+                                    leading: Icon(Icons.edit),
+                                    title: Text('Help Assistant'),
                                     trailing: Icon(Icons.arrow_forward),
                                   ),
                                 ),

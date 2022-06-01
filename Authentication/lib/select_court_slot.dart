@@ -3,14 +3,15 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'all_futsal_reference.dart' as futsalReference;
-import 'all_court_reference.dart' as courtReference;
+
 
 import 'components/gridview_slot.dart';
 
-
 class CourtSlot extends StatefulWidget {
-  const CourtSlot({Key? key}) : super(key: key);
+  final String courtName;
+  final String imageurl;
+  final String futsalTitle;
+  const CourtSlot({Key? key, required this.courtName, required this.imageurl, required this.futsalTitle}) : super(key: key);
 
   @override
   State<CourtSlot> createState() => _CourtSlotState();
@@ -54,7 +55,7 @@ class _CourtSlotState extends State<CourtSlot> {
                     ).createShader(Rect.fromLTRB(0, 0, rect.width, 190));
                   },
                   blendMode: BlendMode.dstIn,
-                  child: Image.network(futsalReference.imageurl,
+                  child: Image.network(widget.imageurl,
                       fit: BoxFit.fill, height: 200, width: double.infinity),
                 ),
                 Padding(
@@ -68,7 +69,7 @@ class _CourtSlotState extends State<CourtSlot> {
                       Center(
                         child: Column(
                           children: [
-                            Text(futsalReference.title,
+                            Text(widget.futsalTitle,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 30.0,
@@ -77,7 +78,7 @@ class _CourtSlotState extends State<CourtSlot> {
                             SizedBox(height: 7),
                             Text(
                                 "Your have choose Court " +
-                                    courtReference.courtTitle,
+                                    widget.courtName,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18.0,
@@ -99,7 +100,7 @@ class _CourtSlotState extends State<CourtSlot> {
                         initialSelectedDate: DateTime.now(),
                         selectionColor: selectedColor,
                         selectedTextColor: Colors.white,
-                        
+
                         //closed day
                         // inactiveDates: [
                         //   DateTime.now().add(Duration(days: 3)),

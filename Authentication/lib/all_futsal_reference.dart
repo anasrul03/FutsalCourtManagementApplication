@@ -1,14 +1,12 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_attemp2/selectcourtpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //Variable that been shared to other file(allcourt)
-late String direct;
-String title = '';
-String imageurl = '';
 
 class AllFutsal extends StatefulWidget {
   const AllFutsal({Key? key}) : super(key: key);
@@ -18,8 +16,10 @@ class AllFutsal extends StatefulWidget {
 }
 
 class AllFutsalState extends State<AllFutsal> {
+  final user = FirebaseAuth.instance.currentUser!;
+
   double height = 72, width = 110;
-  late Icon loveIcon = Icon(Icons.favorite_outline, color: Colors.white);
+  final Icon loveIcon = Icon(Icons.favorite_outline, color: Colors.white);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,13 +52,6 @@ class AllFutsalState extends State<AllFutsal> {
         await prefs.setString('futsalTitle', futsal.futsalName);
         await prefs.setString('futsalId', futsal.id);
 
-        setState(() {
-          //Setting the variable that can change direction court list
-          direct = "FutsalList/${futsal.id}/Courts";
-
-          title = futsal.futsalName;
-          imageurl = futsal.cover_image_url;
-        });
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -66,6 +59,7 @@ class AllFutsalState extends State<AllFutsal> {
                     futsalIdFav: futsal.id,
                     futsalAddress: futsal.address,
                     futsalTitle: futsal.futsalName,
+                    imageurl: futsal.cover_image_url,
                   )),
         );
       },
@@ -151,4 +145,47 @@ class Futsal {
         // date: (json['date'] as Timestamp).toDate(),
         id: json['id'],
       );
+
+  factory Futsal.fromSnapshot(DocumentSnapshot snapshot) {
+    final model = Futsal.fromJson(snapshot.data() as Map<String, dynamic>);
+    return model;
+  }
+
+  factory Futsal.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return Futsal(
+        futsalName: data?['name'],
+        address: data?['address'],
+        cover_image_url: data?['imageurl'],
+        // futsalCourt: json['futsalcourt'],
+        // date: (json['date'] as Timestamp).toDate(),
+        id: data?['id']);
+  }
+  Map<String, dynamic> toFirestore() {
+    return {
+      'id': id,
+      'name': futsalName,
+      'address': address,
+      'imageurl': cover_image_url,
+    };
+  }
+
+  factory Futsal.fromJsonFireAuth(Map<String, dynamic> json) => Futsal(
+        futsalName: json['name'],
+        address: json['address'],
+        cover_image_url: json['imageurl'],
+        // futsalCourt: json['futsalcourt'],
+        // date: (json['date'] as Timestamp).toDate(),
+        id: json['id'],
+      );
+
+  Map<String, dynamic> toJsonFireAuth() => {
+        'id': id,
+        'name': futsalName,
+        'address': address,
+        'imageurl': cover_image_url,
+      };
 }

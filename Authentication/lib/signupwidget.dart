@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import '../dashboard.dart' as PageIndex;
 
 import 'components/round_button.dart';
-import 'components/utils.dart';
 import 'main.dart';
 
 class SignUpWidget extends StatefulWidget {
@@ -40,146 +39,162 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   @override
   Widget build(BuildContext context) {
     print("Sign up page");
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
-      child: Form(
-        key: formKey,
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          SizedBox(height: 60),
-          Image.asset(
-            "lib/assets/images/logo.png",
-            width: 200,
-            height: 200,
-          ),
-          SizedBox(height: 20),
-          Text(
-            "Sign Up your account",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 40),
-          Material(
-            elevation: 10.0,
-            borderRadius: BorderRadius.circular(30.0),
-            shadowColor: Color(0x55434343),
-            child: TextFormField(
-              textAlign: TextAlign.start,
-              textAlignVertical: TextAlignVertical.center,
-              controller: emailController,
-              cursorColor: Colors.white,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                labelText: "Email",
-                prefixIcon: Icon(
-                  Icons.mail,
-                  color: Colors.black54,
-                ),
-                border: InputBorder.none,
-              ),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (email) =>
-                  email != null && !EmailValidator.validate(email)
-                      ? 'Enter a valid email!'
-                      : null,
+    return Container(
+      height: 1000,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Colors.blue,
+            Colors.black,
+          ],
+        ),
+      ),
+      child: SingleChildScrollView(
+        padding: EdgeInsets.all(16),
+        child: Form(
+          key: formKey,
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SizedBox(height: 60),
+            Image.asset(
+              "lib/assets/images/logo.png",
+              width: 200,
+              height: 200,
             ),
-          ),
-          SizedBox(height: 4),
-          Material(
-            elevation: 10.0,
-            borderRadius: BorderRadius.circular(30.0),
-            shadowColor: Color(0x55434343),
-            child: TextFormField(
-              textAlign: TextAlign.start,
-              textAlignVertical: TextAlignVertical.center,
-              controller: nicknameController,
-              cursorColor: Colors.white,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                labelText: "Nickname",
-                prefixIcon: Icon(
-                  Icons.title,
-                  color: Colors.black54,
-                ),
-                border: InputBorder.none,
-              ),
-              // autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (nikcname) =>
-                  nikcname == null ? "Please enter your nickname" : null,
+            SizedBox(height: 20),
+            Text(
+              "Sign Up your account",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
             ),
-          ),
-          SizedBox(height: 4),
-          Material(
-            elevation: 10.0,
-            borderRadius: BorderRadius.circular(30.0),
-            shadowColor: Color(0x55434343),
-            child: TextFormField(
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              textAlign: TextAlign.start,
-              textAlignVertical: TextAlignVertical.center,
-              controller: phoneNumberController,
-              cursorColor: Colors.white,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                labelText: "Phone Number",
-                prefixIcon: Icon(
-                  Icons.phone,
-                  color: Colors.black54,
+            SizedBox(height: 40),
+            Material(
+              elevation: 10.0,
+              borderRadius: BorderRadius.circular(30.0),
+              shadowColor: Color(0x55434343),
+              child: TextFormField(
+                textAlign: TextAlign.start,
+                textAlignVertical: TextAlignVertical.center,
+                controller: emailController,
+                cursorColor: Colors.white,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  labelText: "Email",
+                  prefixIcon: Icon(
+                    Icons.mail,
+                    color: Colors.black54,
+                  ),
+                  border: InputBorder.none,
                 ),
-                border: InputBorder.none,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (email) =>
+                    email != null && !EmailValidator.validate(email)
+                        ? 'Enter a valid email!'
+                        : null,
               ),
-              validator: (value) =>
-                  value == null ? 'Enter your phone number please' : null,
             ),
-          ),
-          SizedBox(height: 4),
-          Material(
-            elevation: 10.0,
-            borderRadius: BorderRadius.circular(30.0),
-            shadowColor: Color(0x55434343),
-            child: TextFormField(
-              textAlign: TextAlign.start,
-              textAlignVertical: TextAlignVertical.center,
-              controller: passwordController,
-              cursorColor: Colors.white,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                labelText: "Password",
-                prefixIcon: Icon(
-                  Icons.lock,
-                  color: Colors.black54,
+            SizedBox(height: 4),
+            Material(
+              elevation: 10.0,
+              borderRadius: BorderRadius.circular(30.0),
+              shadowColor: Color(0x55434343),
+              child: TextFormField(
+                textAlign: TextAlign.start,
+                textAlignVertical: TextAlignVertical.center,
+                controller: nicknameController,
+                cursorColor: Colors.white,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  labelText: "Nickname",
+                  prefixIcon: Icon(
+                    Icons.title,
+                    color: Colors.black54,
+                  ),
+                  border: InputBorder.none,
                 ),
-                border: InputBorder.none,
+                // autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (nikcname) =>
+                    nikcname == null ? "Please enter your nickname" : null,
               ),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (value) => value != null && value.length < 6
-                  ? 'Enter minimum 6 characters'
-                  : null,
             ),
-          ),
-          SizedBox(height: 20),
-          RoundedButton(text: "Sign Up", press: signUp),
-          SizedBox(height: 20),
-          RichText(
-            text: TextSpan(
-                text: "Already have an account? ",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
+            SizedBox(height: 4),
+            Material(
+              elevation: 10.0,
+              borderRadius: BorderRadius.circular(30.0),
+              shadowColor: Color(0x55434343),
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                textAlign: TextAlign.start,
+                textAlignVertical: TextAlignVertical.center,
+                controller: phoneNumberController,
+                cursorColor: Colors.white,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  labelText: "Phone Number",
+                  prefixIcon: Icon(
+                    Icons.phone,
+                    color: Colors.black54,
+                  ),
+                  border: InputBorder.none,
                 ),
-                children: [
-                  TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = widget.onClickedSignIn,
-                      text: 'Log in',
-                      style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: Theme.of(context).colorScheme.secondary))
-                ]),
-          )
-        ]),
+                validator: (value) =>
+                    value == null ? 'Enter your phone number please' : null,
+              ),
+            ),
+            SizedBox(height: 4),
+            Material(
+              elevation: 10.0,
+              borderRadius: BorderRadius.circular(30.0),
+              shadowColor: Color(0x55434343),
+              child: TextFormField(
+                textAlign: TextAlign.start,
+                textAlignVertical: TextAlignVertical.center,
+                controller: passwordController,
+                cursorColor: Colors.white,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Colors.black54,
+                  ),
+                  border: InputBorder.none,
+                ),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) => value != null && value.length < 6
+                    ? 'Enter minimum 6 characters'
+                    : null,
+              ),
+            ),
+            SizedBox(height: 20),
+            RoundedButton(text: "Sign Up", press: signUp),
+            SizedBox(height: 20),
+            RichText(
+              text: TextSpan(
+                  text: "Already have an account? ",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                  children: [
+                    TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = widget.onClickedSignIn,
+                        text: 'Log in',
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Theme.of(context).colorScheme.secondary))
+                  ]),
+            )
+          ]),
+        ),
       ),
     );
   }
@@ -217,7 +232,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.green,
         content: Text("Successfully registered"),
-        duration: Duration(seconds: 3),
+        duration: Duration(milliseconds: 300),
       ));
     } on FirebaseAuthException catch (e) {
       print(e);

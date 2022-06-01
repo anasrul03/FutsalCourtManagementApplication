@@ -6,12 +6,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:login_attemp2/select_court_slot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'all_futsal_reference.dart' as futsalReference;
 
 String courtTitle = '';
 
 class AllCourt extends StatefulWidget {
-  const AllCourt({Key? key}) : super(key: key);
+  final String futsalId;
+  final String imageURL;
+  final String futsalTitle;
+  const AllCourt(
+      {Key? key,
+      required this.futsalId,
+      required this.imageURL,
+      required this.futsalTitle})
+      : super(key: key);
 
   @override
   State<AllCourt> createState() => _AllCourtState();
@@ -19,8 +26,6 @@ class AllCourt extends StatefulWidget {
 
 class _AllCourtState extends State<AllCourt> {
   final String FutsalList = "FutsalList";
-  final String title = futsalReference.title;
-  final String idpath = futsalReference.direct;
 
   @override
   void initState() {
@@ -60,11 +65,16 @@ class _AllCourtState extends State<AllCourt> {
         data['courtId'] = prefs.getString('courtId');
 
         log(court.courtName);
-      ;
-        courtTitle = court.courtName;
+        ;
+
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const CourtSlot()),
+          MaterialPageRoute(
+              builder: (context) => CourtSlot(
+                    courtName: court.courtName,
+                    futsalTitle: widget.futsalTitle,
+                    imageurl: widget.imageURL,
+                  )),
         );
       },
       child: Padding(
@@ -92,7 +102,9 @@ class _AllCourtState extends State<AllCourt> {
       ));
 
   Stream<List<Court>> readUsers() => FirebaseFirestore.instance
-      .collection(idpath)
+      .collection("FutsalList")
+      .doc(widget.futsalId)
+      .collection("Courts")
       .snapshots()
       .map((snapshot) =>
           snapshot.docs.map((doc) => Court.fromJson(doc.data())).toList());

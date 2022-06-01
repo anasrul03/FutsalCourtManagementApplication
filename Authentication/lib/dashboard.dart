@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:login_attemp2/search_page.dart';
 import 'package:login_attemp2/userProfile_page.dart';
 
 import 'booking_page.dart';
@@ -17,11 +18,11 @@ final screens = [
   //Index = 0
   home_page(),
   //Index = 1
-  favorite_page(),
+  SearchPage(),
   //Index = 2
   booking_page(),
   //Index = 3
-  help_page(),
+  favorite_page(),
   //Index = 4
   UserProfile(),
 ];
@@ -82,16 +83,16 @@ class _DashboardState extends State<Dashboard> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: "Favorite",
+            icon: Icon(Icons.search),
+            label: "Search",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
             label: "Bookings",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.help),
-            label: "Help",
+            icon: Icon(Icons.favorite),
+            label: "Favorite",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_rounded),

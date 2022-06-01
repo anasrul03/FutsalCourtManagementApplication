@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
-import 'package:flutter_credit_card/credit_card_form.dart';
-import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -220,12 +218,41 @@ class MySampleState extends State<MySample> {
     data['startDate'] = widget.getData;
     data['endDate'] = endDateTime;
     data['createdDate'] = DateTime.now().toString();
+    data['userEmail'] = user.email;
     data['userId'] = prefs.getString('userId');
     data['futsalId'] = prefs.getString('futsalId');
     data['courtId'] = prefs.getString('courtId');
     data['futsalTitle'] = prefs.getString('futsalTitle');
 
     // data['bookId'] = "inspect(data)";
+    String id = FirebaseFirestore.instance.collection('Posts').doc().id;
+    try {
+      print("post created");
+      FirebaseFirestore.instance..collection("UserData").doc(user.email).collection('Booked').doc(id).set({
+        "startDate": widget.getData,
+        'endDate': endDateTime,
+        'createdDate': DateTime.now().toString(),
+        'userEmail': user.email,
+        'userId': prefs.getString('userId'),
+        'futsalId': prefs.getString('futsalId'),
+        'courtId': prefs.getString('courtId'),
+        'futsalTitle': prefs.getString('futsalTitle'),
+        'bookId': id,
+      });
+            FirebaseFirestore.instance..collection("Booked").doc(id).set({
+        "startDate": widget.getData,
+        'endDate': endDateTime,
+        'createdDate': DateTime.now().toString(),
+        'userEmail': user.email,
+        'userId': prefs.getString('userId'),
+        'futsalId': prefs.getString('futsalId'),
+        'courtId': prefs.getString('courtId'),
+        'futsalTitle': prefs.getString('futsalTitle'),
+        'bookId': id,
+      });
+    } catch (e) {
+      print(e);
+    }
 
     final bookedDate = FirebaseFirestore.instance
         .collection('UserData')
@@ -233,14 +260,10 @@ class MySampleState extends State<MySample> {
         .collection("Booked")
         .doc()
         .set(data);
-        
+
     final paid = FirebaseFirestore.instance
-        .collection('UserData')
-        .doc(user.email)
-        .collection("Payment")
+        .collection('BookedListFromUser')
         .doc()
         .set(data);
-
-    // bookedDate.id;
   }
 }

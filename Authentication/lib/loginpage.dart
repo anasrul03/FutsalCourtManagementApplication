@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:login_attemp2/components/round_button.dart';
 import 'main.dart';
 import '../dashboard.dart' as PageIndex;
+import 'passwordResetPage.dart';
 
 class LoginWidget extends StatefulWidget {
   final VoidCallback onClickedSignUp;
@@ -37,137 +38,138 @@ class _LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-        color: Color.fromARGB(255, 47, 47, 47),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Colors.blue,
+              Colors.black,
+            ],
+          ),
+        ),
         child: Center(
             child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(vertical: 19, horizontal: 10),
           //Card is over here!
-          child: Card(
-            elevation: 30.0,
-            shadowColor: Color(0x55434343),
-            clipBehavior: Clip.hardEdge,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(35.0),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Colors.blue,
-                    Colors.blueGrey,
-                  ],
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(
+                  "lib/assets/images/logo.png",
+                  width: 200,
+                  height: 200,
                 ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset(
-                      "lib/assets/images/logo.png",
-                      width: 200,
-                      height: 200,
+                SizedBox(height: 20),
+                Text(
+                  "Welcome to Courtify",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 26.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  "Login to book your game",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Material(
+                  elevation: 10.0,
+                  borderRadius: BorderRadius.circular(15.0),
+                  shadowColor: Color(0x55434343),
+                  child: TextFormField(
+                    textAlign: TextAlign.start,
+                    textAlignVertical: TextAlignVertical.center,
+                    controller: emailController,
+                    cursorColor: Colors.white,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      labelText: "Email",
+                      prefixIcon: Icon(
+                        Icons.mail,
+                        color: Colors.black54,
+                      ),
+                      border: InputBorder.none,
                     ),
-                    SizedBox(height: 20),
-                    Text(
-                      "Welcome to Courtify",
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (email) =>
+                        email != null && !EmailValidator.validate(email)
+                            ? 'Enter a valid email!'
+                            : null,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Material(
+                  elevation: 10.0,
+                  borderRadius: BorderRadius.circular(15.0),
+                  shadowColor: Color(0x55434343),
+                  child: TextFormField(
+                    obscureText: isObscure,
+                    textAlign: TextAlign.start,
+                    textAlignVertical: TextAlignVertical.center,
+                    controller: passwordController,
+                    cursorColor: Colors.white,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Colors.black54,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(isObscure
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () {
+                          isObscure
+                              ? setState(() => isObscure = false)
+                              : setState(() => isObscure = true);
+                        },
+                      ),
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                RoundedButton(text: "Log in", press: signIn),
+                SizedBox(height: 20),
+                GestureDetector(
+                    child: Text("Forgot Password",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.blue[200],
+                            fontSize: 18)),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (route) => ResetPasswordPage()));
+                    }),
+                RichText(
+                  text: TextSpan(
+                      text: "No Account? ",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 26.0,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
                       ),
-                    ),
-                    Text(
-                      "Login to book your game",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Material(
-                      elevation: 10.0,
-                      borderRadius: BorderRadius.circular(15.0),
-                      shadowColor: Color(0x55434343),
-                      child: TextFormField(
-                        textAlign: TextAlign.start,
-                        textAlignVertical: TextAlignVertical.center,
-                        controller: emailController,
-                        cursorColor: Colors.white,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          labelText: "Email",
-                          prefixIcon: Icon(
-                            Icons.mail,
-                            color: Colors.black54,
-                          ),
-                          border: InputBorder.none,
-                        ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (email) =>
-                            email != null && !EmailValidator.validate(email)
-                                ? 'Enter a valid email!'
-                                : null,
-                      ),
-                    ),
-                    SizedBox(height: 4),
-                    Material(
-                      elevation: 10.0,
-                      borderRadius: BorderRadius.circular(15.0),
-                      shadowColor: Color(0x55434343),
-                      child: TextFormField(
-                        obscureText: isObscure,
-                        textAlign: TextAlign.start,
-                        textAlignVertical: TextAlignVertical.center,
-                        controller: passwordController,
-                        cursorColor: Colors.white,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          labelText: "Password",
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            color: Colors.black54,
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(isObscure
-                                ? Icons.visibility_off
-                                : Icons.visibility),
-                            onPressed: () {
-                              isObscure
-                                  ? setState(() => isObscure = false)
-                                  : setState(() => isObscure = true);
-                            },
-                          ),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    RoundedButton(text: "Log in", press: signIn),
-                    SizedBox(height: 20),
-                    RichText(
-                      text: TextSpan(
-                          text: "No Account? ",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                          children: [
-                            TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = widget.onClickedSignUp,
-                                text: 'Sign Up',
-                                style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.blue[200]))
-                          ]),
-                    )
-                  ],
-                ),
-              ),
+                      children: [
+                        TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = widget.onClickedSignUp,
+                            text: 'Sign Up',
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: Colors.blue[200]))
+                      ]),
+                )
+              ],
             ),
           ),
         )));

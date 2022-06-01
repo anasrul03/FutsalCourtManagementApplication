@@ -16,6 +16,8 @@ class home_page extends StatefulWidget {
 }
 
 class _home_pageState extends State<home_page> {
+  final TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +28,6 @@ class _home_pageState extends State<home_page> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           
             //Let's start by adding the text
             Text(
               "Welcome Futsal Player",
@@ -54,6 +55,7 @@ class _home_pageState extends State<home_page> {
               borderRadius: BorderRadius.circular(30.0),
               shadowColor: Color(0x55434343),
               child: TextField(
+                controller: searchController,
                 textAlign: TextAlign.start,
                 textAlignVertical: TextAlignVertical.center,
                 decoration: InputDecoration(

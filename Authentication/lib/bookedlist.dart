@@ -137,19 +137,21 @@ Widget buildLists(data, uid, context) => GestureDetector(
 // }
 
 class Book {
-  String? id;
+  String? bookId;
   Timestamp? startDate;
   Timestamp? endDate;
   String? userId;
+  String? userEmail;
   String? futsalId;
   String? courtId;
   String? futsalTitle;
 
   Book({
-    this.id,
+    this.bookId,
     this.startDate,
     this.endDate,
     this.userId,
+    this.userEmail,
     this.futsalId,
     this.courtId,
     this.futsalTitle,
@@ -181,7 +183,7 @@ class Book {
   }
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
-        id: json["id"],
+        bookId: json["id"],
         startDate: json["startDate"],
         courtId: json["courtId"],
         futsalTitle: json["futsalTitle"],
@@ -190,6 +192,6 @@ class Book {
 
   Map<String, dynamic> toJson() => {
         "startDate": startDate,
-        "id": id,
+        "id": bookId,
       };
 }
