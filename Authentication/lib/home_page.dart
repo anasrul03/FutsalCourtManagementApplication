@@ -16,114 +16,222 @@ class home_page extends StatefulWidget {
 }
 
 class _home_pageState extends State<home_page> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     // inspect(futsal);
-      //     showSearch(context: context, delegate: DataSearch());
-      //   },
-      //   backgroundColor: Colors.white,
-      //   child: Icon(Icons.search, color: Colors.black),
-      // ),
       backgroundColor: Colors.black,
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //Let's start by adding the text
-            Text(
-              "Welcome Futsal Player",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 26.0,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Text(
-              "Book your futsal arena",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-            SizedBox(
-              height: 40.0,
-            ),
-            //Now let's add some elevation to our text field
-            //to do this we need to wrap it in a Material widget
-            Material(
-              elevation: 10.0,
-              borderRadius: BorderRadius.circular(30.0),
-              shadowColor: Color(0x55434343),
-              child: TextField(
-                onTap: () {
-                  showSearch(context: context, delegate: DataSearch());
-                },
-                textAlign: TextAlign.start,
-                textAlignVertical: TextAlignVertical.center,
-                decoration: InputDecoration(
-                  hintText: "Search for Futsal, Venue...",
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.black54,
+          padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 0.0),
+          child: Column(
+            children: [
+              Stack(
+                textDirection: TextDirection.ltr,
+                children: [
+                  ShaderMask(
+                    shaderCallback: (rect) {
+                      return LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.black, Colors.transparent],
+                      ).createShader(Rect.fromLTRB(0, 0, rect.width, 150));
+                    },
+                    blendMode: BlendMode.dstIn,
+                    child: Image.network(
+                        "https://www.decathlon-united.media/media/sportfolios/assets/img/s01/football/decathlon-futsal.webp",
+                        fit: BoxFit.cover,
+                        height: 200,
+                        width: double.infinity),
                   ),
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-            SizedBox(height: 20.0),
-            //Now let's Add a Tabulation bar
-            DefaultTabController(
-              length: 3,
-              child: Expanded(
-                child: Column(
-                  children: [
-                    TabBar(
-                      indicatorColor: Colors.blue,
-                      unselectedLabelColor: Colors.white,
-                      labelColor: Colors.blue,
-                      labelPadding: EdgeInsets.symmetric(horizontal: 8.0),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       // ignore: prefer_const_literals_to_create_immutables
-                      tabs: [
-                        Tab(
-                          text: "Courts",
+                      children: [
+                        SizedBox(height: 50),
+                        Text(
+                          "Welcome Futsal Player",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 26.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        Tab(
-                          text: "Promotion",
+                        Text(
+                          "Book your futsal arena",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
-                        Tab(
-                          text: "Tournament",
+                        SizedBox(height: 30),
+                        Material(
+                          elevation: 10.0,
+                          borderRadius: BorderRadius.circular(30.0),
+                          shadowColor: Color(0x55434343),
+                          child: TextField(
+                            onTap: () {
+                              showSearch(
+                                  context: context, delegate: DataSearch());
+                            },
+                            textAlign: TextAlign.start,
+                            textAlignVertical: TextAlignVertical.center,
+                            decoration: InputDecoration(
+                              hintText: "Search for Futsal, Venue...",
+                              hintStyle: TextStyle(color: Colors.black),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Colors.black,
+                              ),
+                              border: InputBorder.none,
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    Expanded(
-                      child: TabBarView(
-                        children: [
-                          //First index(TABS)
-                          AllFutsal(),
-                          //tabs 2
-                          PromotionList(),
-                          //tabs 3
-                          TournamentList(),
+                  ),
+                ],
+              ),
+              DefaultTabController(
+                length: 3,
+                child: Expanded(
+                  child: Column(
+                    children: [
+                      TabBar(
+                        indicatorColor: Colors.blue,
+                        unselectedLabelColor: Colors.white,
+                        labelColor: Colors.blue,
+                        labelPadding: EdgeInsets.symmetric(horizontal: 8.0),
+                        // ignore: prefer_const_literals_to_create_immutables
+                        tabs: [
+                          Tab(
+                            text: "Courts",
+                          ),
+                          Tab(
+                            text: "Promotion",
+                          ),
+                          Tab(
+                            text: "Tournament",
+                          ),
                         ],
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            //First index(TABS)
+                            AllFutsal(),
+                            //tabs 2
+                            PromotionList(),
+                            //tabs 3
+                            TournamentList(),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
-        ),
-      ),
+              )
+            ],
+          )
+
+          //  Column(
+          //   mainAxisAlignment: MainAxisAlignment.start,
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     //Let's start by adding the text
+          //     Text(
+          //       "Welcome Futsal Player",
+          //       style: TextStyle(
+          //         color: Colors.white,
+          //         fontSize: 26.0,
+          //         fontWeight: FontWeight.w600,
+          //       ),
+          //     ),
+          //     Text(
+          //       "Book your futsal arena",
+          //       style: TextStyle(
+          //         color: Colors.white,
+          //         fontSize: 20.0,
+          //         fontWeight: FontWeight.w300,
+          //       ),
+          //     ),
+          //     SizedBox(
+          //       height: 40.0,
+          //     ),
+          //     //Now let's add some elevation to our text field
+          //     //to do this we need to wrap it in a Material widget
+          //     Material(
+          //       elevation: 10.0,
+          //       borderRadius: BorderRadius.circular(30.0),
+          //       shadowColor: Color(0x55434343),
+          //       child: TextField(
+          //         onTap: () {
+          //           showSearch(context: context, delegate: DataSearch());
+          //         },
+          //         textAlign: TextAlign.start,
+          //         textAlignVertical: TextAlignVertical.center,
+          //         decoration: InputDecoration(
+          //           hintText: "Search for Futsal, Venue...",
+          //           prefixIcon: Icon(
+          //             Icons.search,
+          //             color: Colors.black54,
+          //           ),
+          //           border: InputBorder.none,
+          //         ),
+          //       ),
+          //     ),
+          //     SizedBox(height: 20.0),
+          //     //Now let's Add a Tabulation bar
+          //     DefaultTabController(
+          //       length: 3,
+          //       child: Expanded(
+          //         child: Column(
+          //           children: [
+          //             TabBar(
+          //               indicatorColor: Colors.blue,
+          //               unselectedLabelColor: Colors.white,
+          //               labelColor: Colors.blue,
+          //               labelPadding: EdgeInsets.symmetric(horizontal: 8.0),
+          //               // ignore: prefer_const_literals_to_create_immutables
+          //               tabs: [
+          //                 Tab(
+          //                   text: "Courts",
+          //                 ),
+          //                 Tab(
+          //                   text: "Promotion",
+          //                 ),
+          //                 Tab(
+          //                   text: "Tournament",
+          //                 ),
+          //               ],
+          //             ),
+          //             SizedBox(
+          //               height: 5.0,
+          //             ),
+          //             Expanded(
+          //               child: TabBarView(
+          //                 children: [
+          //                   //First index(TABS)
+          //                   AllFutsal(),
+          //                   //tabs 2
+          //                   PromotionList(),
+          //                   //tabs 3
+          //                   TournamentList(),
+          //                 ],
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          // ),
+          ),
     );
   }
 

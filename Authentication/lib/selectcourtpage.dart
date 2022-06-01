@@ -30,7 +30,7 @@ class _SelectCourtState extends State<SelectCourt> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Colors.blueGrey[800],
-          title: Text(widget.futsalTitle),
+          title: Text("Select Court"),
           actions: [
             IconButton(
                 tooltip: "Like!",
@@ -65,7 +65,7 @@ class _SelectCourtState extends State<SelectCourt> {
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
                       SizedBox(height: 130),
-                      Text("Select your perfect Court",
+                      Text(widget.futsalTitle,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 30.0,

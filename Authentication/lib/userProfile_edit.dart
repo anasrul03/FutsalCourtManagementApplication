@@ -31,14 +31,10 @@ class _ProfileEditState extends State<ProfileEdit> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Courtify",
+              "Edit Profile",
               style: GoogleFonts.lato(),
             ),
-            SizedBox(width: 3),
-            Icon(
-              Icons.sports_soccer,
-              color: Colors.blue,
-            ),
+           
           ],
         ),
         elevation: 0.0,

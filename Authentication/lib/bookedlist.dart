@@ -44,34 +44,6 @@ class _BookedListState extends State<BookedList> {
         ));
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     backgroundColor: Colors.black,
-  //     body: StreamBuilder<List<Book>>(
-  //       stream: getBookedList(),
-  //       builder: (context, snapshot) {
-  //         if (snapshot.hasError) {
-  //           inspect(snapshot.error);
-
-  //           return Text("Something went wrong! ${snapshot.error} ");
-  //         } else if (snapshot.hasData) {
-  //           final bookedlist = snapshot.data!;
-  //           inspect(snapshot.data);
-
-  //           //  DocumentSnapshot docSnap = await doc_ref.get();
-  //           //          var doc_id2 = docSnap.reference.documentID;
-
-  //           return ListView(
-  //             children: bookedlist.map(buildLists).toList(),
-  //           );
-  //         } else {
-  //           return Center(
-  //               child: CircularProgressIndicator(color: Colors.white));
-  //         }
-  //       },
-  //     ),
-  //   );
 }
 
 Widget buildLists(data, uid, context) => GestureDetector(
@@ -122,19 +94,7 @@ Widget buildLists(data, uid, context) => GestureDetector(
       ),
     );
 
-//   Stream<List<Book>> getBookedList() => FirebaseFirestore.instance
-//       .collection('UserData')
-//       .doc(user.email)
-//       .collection("Booked")
-//       .orderBy("createdDate", descending: true)
-//       .snapshots()
-//       .map((snapshot) => snapshot.docs.map((doc) {
-//             // print(doc.id);
-//             // log(doc.id);
-//             // log('called getBookedList ');
-//             return Book.fromJson(doc.data());
-//           }).toList());
-// }
+
 
 class Book {
   String? bookId;
@@ -157,23 +117,6 @@ class Book {
     this.futsalTitle,
   });
 
-  // static Book fromJson(Map<String, dynamic> json) => Book(
-  //       id: json['id'],
-  //       startDate: json['startDate'],
-  //       endDate: json['endDate'],
-  //       userId: json['userId'],
-  //       futsalId: json['futsalId'],
-  //       courtId: json['courtId'],
-  //       futsalTitle: json['futsalTitle'],
-  //     );
-
-  // Map<String, dynamic> toJson() => {
-  //       'endDate': endDate,
-  //       'startDate': startDate,
-  //       'userId': userId,
-  //       'futsalId': futsalId,
-  //       'courtId': courtId,
-  //     };
 
   String toRawJson() => json.encode(toJson());
 

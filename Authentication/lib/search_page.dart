@@ -36,6 +36,7 @@ class _SearchPageState extends State<SearchPage> {
     for (var i = 0; i < list.length; i++) {
       futsal.add(Futsal(
           address: list[i]["address"],
+          id: list[i]["id"],
           cover_image_url: list[i]["imageurl"],
           futsalName: list[i]["name"]));
     }
@@ -47,27 +48,9 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     inspect(futsal);
-      //     showSearch(context: context, delegate: DataSearch());
-      //   },
-      //   backgroundColor: Colors.white,
-      //   child: Icon(Icons.search, color: Colors.black),
-      // ),
       body: home_page(),
     );
   }
-
-  // Future<List<Futsal>> curUserData() {
-  //   return db
-  //       .collection('users')
-  //       .doc(user.uid)
-  //       .snapshots()
-  //       .map((DocumentSnapshot<Map<String, dynamic>> snapshot) =>
-  //           Futsal.fromJson(snapshot.data()!))
-  //       .toList();
-  // }
 }
 
 class DataSearch extends SearchDelegate<String> {
@@ -89,6 +72,7 @@ class DataSearch extends SearchDelegate<String> {
     return IconButton(
       onPressed: () {
         close(context, '');
+        FocusScope.of(context).unfocus();
       },
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
@@ -97,23 +81,9 @@ class DataSearch extends SearchDelegate<String> {
     );
   }
 
-  Widget forIcon(String icon) {
-    log(icon);
-    switch (icon) {
-      case 'class':
-        return Icon(Icons.class_);
-      case 'student':
-        return Icon(Icons.person);
-      case 'coach':
-        return Icon(Icons.directions_run_rounded);
-      default:
-        return Icon(Icons.access_time_filled_sharp);
-    }
-  }
-
   @override
   Widget buildResults(BuildContext context) {
-    return Text(query.toLowerCase());
+    return Text(query);
   }
 
   @override
@@ -125,23 +95,8 @@ class DataSearch extends SearchDelegate<String> {
                 element.futsalName.toLowerCase().contains(query) ||
                 element.address.toLowerCase().contains(query))
             .toList();
-    // futsal.where((element) => element.address.startsWith(query)).toList();
 
     log(suggestionList.length.toString());
-
-    // return ListView.builder(
-    //     itemCount: suggestionList.length,
-    //     itemBuilder: (context, index) => ListTile(
-    //           title: Text(suggestionList[index].address),
-    //           onTap: () async {
-    //             // showResults(context);
-    //           },
-    //         ));
-
-    //show primary results widget
-    // final suggestionList = query.isEmpty
-    //     ? futsal
-    //     : futsal.where((element) => element.name!.startsWith(query)).toList();
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
@@ -163,14 +118,8 @@ class DataSearch extends SearchDelegate<String> {
           final prefs = await SharedPreferences.getInstance();
           // Save an String value to 'action' key.
           await prefs.setString('futsalTitle', futsal[index].futsalName);
-          await prefs.setString('futsalId', futsal[index].id);
-// setState(() {
-//           //Setting the variable that can change direction court list
-//           direct = "FutsalList/${futsal.id}/Courts";
+          // await prefs.setString('futsalId', futsal[index].id);
 
-//           title = futsal.futsalName;
-//           imageurl = futsal.cover_image_url;
-//         });
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -181,8 +130,9 @@ class DataSearch extends SearchDelegate<String> {
                       imageurl: futsal[index].cover_image_url,
                     )),
           );
+
+          inspect(futsal[index].address);
         },
-        // leading: Icon(Icons.abc_outlined),
         title: RichText(
           text: TextSpan(
             text: suggestionList[index].futsalName.substring(0, query.length),
