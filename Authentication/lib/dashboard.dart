@@ -18,13 +18,13 @@ final screens = [
   //Index = 0
   home_page(),
   //Index = 1
-  SearchPage(),
-  //Index = 2
   booking_page(),
-  //Index = 3
+  //Index = 2
   favorite_page(),
-  //Index = 4
+  //Index = 3
   UserProfile(),
+
+
 ];
 
 void main() {
@@ -81,10 +81,6 @@ class _DashboardState extends State<Dashboard> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "Search",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),

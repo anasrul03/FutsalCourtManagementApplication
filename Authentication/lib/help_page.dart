@@ -21,88 +21,95 @@ class _help_pageState extends State<help_page> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: <Widget>[
-              Text(
-                "Did not find the booking you were looking for?",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 26.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                "Input your Booking ID of an advance info that might help us to track your problem.",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-              SizedBox(height: 40),
-              Material(
-                borderRadius: BorderRadius.circular(23.0),
-                shadowColor: Color(0x55434343),
-                child: TextFormField(
-                  controller: bookingIdController,
-                  textAlign: TextAlign.start,
-                  textAlignVertical: TextAlignVertical.center,
-                  decoration: InputDecoration(
-                    hintText: "Insert your booking ID...",
-                    prefixIcon: Icon(
-                      Icons.book,
-                      color: Colors.black54,
+      body: Container(
+        height: 900,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Center(
+            heightFactor: 2,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // ignore: prefer_const_literals_to_create_immutables
+                children: <Widget>[
+                  Text(
+                    "Did not find the booking you were looking for?",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 26.0,
+                      fontWeight: FontWeight.w600,
                     ),
-                    border: InputBorder.none,
                   ),
-                ),
-              ),
-              SizedBox(height: 10),
-              Material(
-                borderRadius: BorderRadius.circular(23.0),
-                shadowColor: Color(0x55434343),
-                child: TextFormField(
-                  controller: descriptionController,
-                  textAlign: TextAlign.start,
-                  textAlignVertical: TextAlignVertical.center,
-                  decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                    hintText: "Describe your issues...",
-                    border: InputBorder.none,
+                  Text(
+                    "Input your Booking ID of an advance info that might help us to track your problem.",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
-                  maxLines: 10,
-                  minLines: 1,
-                ),
-              ),
-              SizedBox(height: 20),
-              Center(
-                child: Container(
-                  margin: const EdgeInsets.all(10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 17, horizontal: 20),
-                        backgroundColor: Colors.blue,
+                  SizedBox(height: 40),
+                  Material(
+                    borderRadius: BorderRadius.circular(23.0),
+                    shadowColor: Color(0x55434343),
+                    child: TextFormField(
+                      controller: bookingIdController,
+                      textAlign: TextAlign.start,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        hintText: "Insert your booking ID...",
+                        prefixIcon: Icon(
+                          Icons.book,
+                          color: Colors.black54,
+                        ),
+                        border: InputBorder.none,
                       ),
-                      onPressed: () {
-                        sendReport(bookingIdController, descriptionController);
-                      },
-                      child: Text("Submit",
-                          style:
-                              TextStyle(fontSize: 16.0, color: Colors.white)),
                     ),
                   ),
-                ),
-              ),
-            ]),
+                  SizedBox(height: 10),
+                  Material(
+                    borderRadius: BorderRadius.circular(23.0),
+                    shadowColor: Color(0x55434343),
+                    child: TextFormField(
+                      controller: descriptionController,
+                      textAlign: TextAlign.start,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                        hintText: "Describe your issues...",
+                        border: InputBorder.none,
+                      ),
+                      maxLines: 10,
+                      minLines: 1,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.all(10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 17, horizontal: 20),
+                            backgroundColor: Colors.blue,
+                          ),
+                          onPressed: () {
+                            sendReport(
+                                bookingIdController, descriptionController);
+                          },
+                          child: Text("Submit",
+                              style: TextStyle(
+                                  fontSize: 16.0, color: Colors.white)),
+                        ),
+                      ),
+                    ),
+                  ),
+                ]),
+          ),
+        ),
       ),
     );
   }

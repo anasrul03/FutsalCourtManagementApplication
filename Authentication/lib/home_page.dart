@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types
 
-import 'dart:ui';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:login_attemp2/all_futsal_reference.dart';
 import 'package:login_attemp2/promotion_page.dart';
 import 'package:login_attemp2/tournament.dart';
+
+import 'search_page.dart';
 // import 'components/futsalCard.dart';
 
 class home_page extends StatefulWidget {
@@ -55,6 +55,9 @@ class _home_pageState extends State<home_page> {
               borderRadius: BorderRadius.circular(30.0),
               shadowColor: Color(0x55434343),
               child: TextField(
+                onTap: () {
+                  showSearch(context: context, delegate: DataSearch());
+                },
                 controller: searchController,
                 textAlign: TextAlign.start,
                 textAlignVertical: TextAlignVertical.center,
