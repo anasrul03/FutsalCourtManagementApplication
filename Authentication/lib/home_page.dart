@@ -16,11 +16,18 @@ class home_page extends StatefulWidget {
 }
 
 class _home_pageState extends State<home_page> {
-  final TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     // inspect(futsal);
+      //     showSearch(context: context, delegate: DataSearch());
+      //   },
+      //   backgroundColor: Colors.white,
+      //   child: Icon(Icons.search, color: Colors.black),
+      // ),
       backgroundColor: Colors.black,
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
@@ -58,7 +65,6 @@ class _home_pageState extends State<home_page> {
                 onTap: () {
                   showSearch(context: context, delegate: DataSearch());
                 },
-                controller: searchController,
                 textAlign: TextAlign.start,
                 textAlignVertical: TextAlignVertical.center,
                 decoration: InputDecoration(

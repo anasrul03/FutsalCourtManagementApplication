@@ -176,7 +176,7 @@ class MySampleState extends State<MySample> {
                             if (formKey.currentState!.validate()) {
                               print('valid!');
                               sendData();
-                              currentIndex = 2;
+                              currentIndex = 1;
 
                               Navigator.push(
                                   context,
@@ -228,18 +228,25 @@ class MySampleState extends State<MySample> {
     String id = FirebaseFirestore.instance.collection('Posts').doc().id;
     try {
       print("post created");
-      FirebaseFirestore.instance..collection("UserData").doc(user.email).collection('Booked').doc(id).set({
-        "startDate": widget.getData,
-        'endDate': endDateTime,
-        'createdDate': DateTime.now().toString(),
-        'userEmail': user.email,
-        'userId': prefs.getString('userId'),
-        'futsalId': prefs.getString('futsalId'),
-        'courtId': prefs.getString('courtId'),
-        'futsalTitle': prefs.getString('futsalTitle'),
-        'bookId': id,
-      });
-            FirebaseFirestore.instance..collection("Booked").doc(id).set({
+      // ignore: avoid_single_cascade_in_expression_statements
+      FirebaseFirestore.instance
+        ..collection("UserData")
+            .doc(user.email)
+            .collection('Booked')
+            .doc(id)
+            .set({
+          "startDate": widget.getData,
+          'endDate': endDateTime,
+          'createdDate': DateTime.now().toString(),
+          'userEmail': user.email,
+          'userId': prefs.getString('userId'),
+          'futsalId': prefs.getString('futsalId'),
+          'courtId': prefs.getString('courtId'),
+          'futsalTitle': prefs.getString('futsalTitle'),
+          'bookId': id,
+        });
+      // ignore: avoid_single_cascade_in_expression_statements
+      FirebaseFirestore.instance.collection("BookedListFromUser").doc(id).set({
         "startDate": widget.getData,
         'endDate': endDateTime,
         'createdDate': DateTime.now().toString(),
@@ -254,16 +261,16 @@ class MySampleState extends State<MySample> {
       print(e);
     }
 
-    final bookedDate = FirebaseFirestore.instance
-        .collection('UserData')
-        .doc(user.email)
-        .collection("Booked")
-        .doc()
-        .set(data);
+    // final bookedDate = FirebaseFirestore.instance
+    //     .collection('UserData')
+    //     .doc(user.email)
+    //     .collection("Booked")
+    //     .doc()
+    //     .set(data);
 
-    final paid = FirebaseFirestore.instance
-        .collection('BookedListFromUser')
-        .doc()
-        .set(data);
+    // final paid = FirebaseFirestore.instance
+    //     .collection('BookedListFromUser')
+    //     .doc()
+    //     .set(data);
   }
 }

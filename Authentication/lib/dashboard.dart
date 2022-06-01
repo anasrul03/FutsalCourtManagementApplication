@@ -8,7 +8,6 @@ import 'package:login_attemp2/userProfile_page.dart';
 import 'booking_page.dart';
 
 import 'favorite_page.dart';
-import 'help_page.dart';
 import 'home_page.dart';
 
 // this is the index for the bottomNavigationBar
@@ -16,15 +15,13 @@ int currentIndex = 0;
 // this is the screen based on the selected index on BottomNavigationBar
 final screens = [
   //Index = 0
-  home_page(),
+  SearchPage(),
   //Index = 1
   booking_page(),
   //Index = 2
   favorite_page(),
   //Index = 3
   UserProfile(),
-
-
 ];
 
 void main() {

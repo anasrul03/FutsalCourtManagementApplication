@@ -118,7 +118,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 ),
                 // autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (nikcname) =>
-                    nikcname == null ? "Please enter your nickname" : null,
+                    nikcname != null ? "Please enter your nickname" : null,
               ),
             ),
             SizedBox(height: 4),
@@ -145,7 +145,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   border: InputBorder.none,
                 ),
                 validator: (value) =>
-                    value == null ? 'Enter your phone number please' : null,
+                    value != null ? 'Enter your phone number please' : null,
               ),
             ),
             SizedBox(height: 4),

@@ -16,6 +16,15 @@ class help_page extends StatefulWidget {
 class _help_pageState extends State<help_page> {
   final bookingIdController = TextEditingController();
   final descriptionController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    bookingIdController.dispose();
+    descriptionController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,50 +49,63 @@ class _help_pageState extends State<help_page> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  SizedBox(height: 5),
                   Text(
-                    "Input your Booking ID of an advance info that might help us to track your problem.",
+                    "Input your Booking ID of an advance info that might help us to track your problem.(your booking id shown in your booked list)",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.white60,
                       fontSize: 18.0,
                       fontWeight: FontWeight.w300,
                     ),
                   ),
                   SizedBox(height: 40),
-                  Material(
-                    borderRadius: BorderRadius.circular(23.0),
-                    shadowColor: Color(0x55434343),
-                    child: TextFormField(
-                      controller: bookingIdController,
-                      textAlign: TextAlign.start,
-                      textAlignVertical: TextAlignVertical.center,
-                      decoration: InputDecoration(
-                        hintText: "Insert your booking ID...",
-                        prefixIcon: Icon(
-                          Icons.book,
-                          color: Colors.black54,
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Material(
-                    borderRadius: BorderRadius.circular(23.0),
-                    shadowColor: Color(0x55434343),
-                    child: TextFormField(
-                      controller: descriptionController,
-                      textAlign: TextAlign.start,
-                      textAlignVertical: TextAlignVertical.center,
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        hintText: "Describe your issues...",
-                        border: InputBorder.none,
-                      ),
-                      maxLines: 10,
-                      minLines: 1,
-                    ),
-                  ),
+                  Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          Material(
+                            borderRadius: BorderRadius.circular(23.0),
+                            shadowColor: Color(0x55434343),
+                            child: TextFormField(
+                              controller: bookingIdController,
+                              textAlign: TextAlign.start,
+                              textAlignVertical: TextAlignVertical.center,
+                              decoration: InputDecoration(
+                                hintText: "Insert your booking ID...",
+                                prefixIcon: Icon(
+                                  Icons.book,
+                                  color: Colors.black54,
+                                ),
+                                border: InputBorder.none,
+                              ),
+                              validator: (value) => value != null
+                                  ? 'Enter your book id please'
+                                  : null,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Material(
+                            borderRadius: BorderRadius.circular(23.0),
+                            shadowColor: Color(0x55434343),
+                            child: TextFormField(
+                              controller: descriptionController,
+                              textAlign: TextAlign.start,
+                              textAlignVertical: TextAlignVertical.center,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 10),
+                                hintText: "Describe your issues...",
+                                border: InputBorder.none,
+                              ),
+                              maxLines: 10,
+                              minLines: 1,
+                              validator: (value) => value != null
+                                  ? 'Enter some description!'
+                                  : null,
+                            ),
+                          ),
+                        ],
+                      )),
                   SizedBox(height: 20),
                   Center(
                     child: Container(
@@ -116,6 +138,11 @@ class _help_pageState extends State<help_page> {
 
   Future sendReport(TextEditingController bookingIdController,
       TextEditingController descriptionController) async {
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+
     try {
       final user = FirebaseAuth.instance.currentUser!;
 

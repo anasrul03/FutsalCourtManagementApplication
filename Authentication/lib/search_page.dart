@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:login_attemp2/home_page.dart';
 import 'package:login_attemp2/selectcourtpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -46,26 +47,27 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          inspect(futsal);
-          showSearch(context: context, delegate: DataSearch());
-        },
-        backgroundColor: Colors.white,
-        child: Icon(Icons.search, color: Colors.black),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     inspect(futsal);
+      //     showSearch(context: context, delegate: DataSearch());
+      //   },
+      //   backgroundColor: Colors.white,
+      //   child: Icon(Icons.search, color: Colors.black),
+      // ),
+      body: home_page(),
     );
   }
 
-  Future<List<Futsal>> curUserData() {
-    return db
-        .collection('users')
-        .doc(user.uid)
-        .snapshots()
-        .map((DocumentSnapshot<Map<String, dynamic>> snapshot) =>
-            Futsal.fromJson(snapshot.data()!))
-        .toList();
-  }
+  // Future<List<Futsal>> curUserData() {
+  //   return db
+  //       .collection('users')
+  //       .doc(user.uid)
+  //       .snapshots()
+  //       .map((DocumentSnapshot<Map<String, dynamic>> snapshot) =>
+  //           Futsal.fromJson(snapshot.data()!))
+  //       .toList();
+  // }
 }
 
 class DataSearch extends SearchDelegate<String> {
@@ -111,7 +113,7 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text(query);
+    return Text(query.toLowerCase());
   }
 
   @override
@@ -119,8 +121,11 @@ class DataSearch extends SearchDelegate<String> {
     List<Futsal> suggestionList = query.isEmpty
         ? futsal
         : futsal
-            .where((element) => element.futsalName.startsWith(query))
+            .where((element) =>
+                element.futsalName.toLowerCase().contains(query) ||
+                element.address.toLowerCase().contains(query))
             .toList();
+    // futsal.where((element) => element.address.startsWith(query)).toList();
 
     log(suggestionList.length.toString());
 
@@ -140,6 +145,20 @@ class DataSearch extends SearchDelegate<String> {
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
+        leading: Icon(Icons.sports_soccer, color: Colors.grey),
+        subtitle: RichText(
+          text: TextSpan(
+            text: suggestionList[index].address.substring(0, query.length),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+            children: [
+              TextSpan(
+                text: suggestionList[index].address.substring(query.length),
+                style:
+                    TextStyle(fontWeight: FontWeight.w400, color: Colors.grey),
+              )
+            ],
+          ),
+        ),
         onTap: () async {
           final prefs = await SharedPreferences.getInstance();
           // Save an String value to 'action' key.
@@ -167,7 +186,7 @@ class DataSearch extends SearchDelegate<String> {
         title: RichText(
           text: TextSpan(
             text: suggestionList[index].futsalName.substring(0, query.length),
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
             children: [
               TextSpan(
                 text: suggestionList[index].futsalName.substring(query.length),

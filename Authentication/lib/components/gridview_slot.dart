@@ -1,16 +1,10 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:login_attemp2/components/utils.dart';
-import 'package:login_attemp2/payment.dart';
+import 'package:login_attemp2/paymentpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../dashboard.dart';
-import '../paymenttest.dart';
 
 class SlotGrid extends StatefulWidget {
   final DateTime? selectedDate;
