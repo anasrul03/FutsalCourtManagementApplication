@@ -36,7 +36,7 @@ class _booking_pageState extends State<booking_page> {
                   },
                   blendMode: BlendMode.dstIn,
                   child: Image.network(
-                      "https://fcylf.es/wp-content/uploads/2020/10/maxresdefault.jpg",
+                      "https://www.samoanews.com/sites/default/files/styles/article_normal_image/public/field/image/Jr%20Action_6263.jpg?itok=4FpdN2HK",
                       fit: BoxFit.cover,
                       height: 200,
                       width: double.infinity),

@@ -49,7 +49,6 @@ dependencies:
   google_fonts: ^2.3.2
   qr_flutter: ^4.0.0
   flutter_credit_card: ^3.0.1
-  searchfield: ^0.6.5
   flutter_neumorphic: ^3.2.0
 
 

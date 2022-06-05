@@ -78,9 +78,12 @@ class _help_pageState extends State<help_page> {
                                 ),
                                 border: InputBorder.none,
                               ),
-                              validator: (value) => value != null
-                                  ? 'Enter your book id please'
-                                  : null,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) =>
+                                  value == null || value.isEmpty
+                                      ? 'Enter your book id please'
+                                      : null,
                             ),
                           ),
                           SizedBox(height: 10),
@@ -99,9 +102,12 @@ class _help_pageState extends State<help_page> {
                               ),
                               maxLines: 10,
                               minLines: 1,
-                              validator: (value) => value != null
-                                  ? 'Enter some description!'
-                                  : null,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) =>
+                                  value == null || value.isEmpty
+                                      ? 'Enter some description!'
+                                      : null,
                             ),
                           ),
                         ],
@@ -151,6 +157,7 @@ class _help_pageState extends State<help_page> {
         "bookingID": bookingIdController.text.trim(),
         "description": descriptionController.text.trim(),
         "userId": user.uid,
+        "userEmail": user.email,
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.green,
