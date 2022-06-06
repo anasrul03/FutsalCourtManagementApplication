@@ -75,7 +75,7 @@ class PaymentCardPageState extends State<PaymentCardPage> {
                       useGlassMorphism ? Glassmorphism.defaultConfig() : null,
                   cardNumber: cardNumber,
                   expiryDate: expiryDate,
-                  cardHolderName: cardHolderName,
+                  cardHolderName: cardHolderName.toUpperCase(),
                   cvvCode: cvvCode,
                   showBackView: isCvvFocused,
                   obscureCardNumber: true,

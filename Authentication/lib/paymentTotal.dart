@@ -33,7 +33,7 @@ class _PaymentTotalState extends State<PaymentTotal> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.blueGrey[800],
-        title: Text("Select Court"),
+        title: Text("Booking Summary"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -89,7 +89,8 @@ class _PaymentTotalState extends State<PaymentTotal> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => PaymentCardPage(
-                                        getData: widget.selectedDate, priceTotal: widget.pricePerHour,
+                                        getData: widget.selectedDate,
+                                        priceTotal: widget.pricePerHour,
                                       )));
                           print(widget.selectedDate);
                         },
@@ -101,7 +102,8 @@ class _PaymentTotalState extends State<PaymentTotal> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => PaymentCardPage(
-                                        getData: widget.selectedDate, priceTotal: widget.pricePerHour,
+                                        getData: widget.selectedDate,
+                                        priceTotal: widget.pricePerHour,
                                       )));
                         },
                         child: Text("Full Payment"))
