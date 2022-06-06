@@ -19,6 +19,9 @@ class _ProfileEditState extends State<ProfileEdit> {
   final nicknameController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  String? _nickname = null;
+  String? _phoneNumber = null;
+
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
@@ -34,7 +37,6 @@ class _ProfileEditState extends State<ProfileEdit> {
               "Edit Profile",
               style: GoogleFonts.lato(),
             ),
-           
           ],
         ),
         elevation: 0.0,
@@ -69,51 +71,68 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 child: Column(
                                   children: [
                                     TextFormField(
-                                        textAlign: TextAlign.start,
-                                        textAlignVertical:
-                                            TextAlignVertical.center,
-                                        controller: nicknameController,
-                                        cursorColor: Colors.white,
-                                        textInputAction: TextInputAction.next,
-                                        decoration: InputDecoration(
-                                          labelText: "Nickname",
-                                          prefixIcon: Icon(
-                                            Icons.title,
-                                            color: Colors.black,
-                                          ),
-                                          border: InputBorder.none,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _nickname = value;
+                                        });
+                                      },
+                                      cursorColor: Colors.white,
+                                      textAlign: TextAlign.start,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      controller: nicknameController,
+                                      textInputAction: TextInputAction.next,
+                                      decoration: InputDecoration(
+                                        labelText: "Change Nickname",
+                                        prefixIcon: Icon(
+                                          Icons.title,
+                                          color: Colors.black54,
                                         ),
-                                        // autovalidateMode: AutovalidateMode.onUserInteraction,
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Please enter nickname';
-                                          }
-                                        }),
+                                        border: InputBorder.none,
+                                        suffixIcon: _nickname == null ||
+                                                _nickname!.trim() == ''
+                                            ? null
+                                            : IconButton(
+                                                onPressed: () {
+                                                  updateNickname();
+                                                },
+                                                icon: Icon(Icons.save)),
+                                      ),
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                    ),
                                     SizedBox(height: 10),
                                     TextFormField(
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
-                                        textAlign: TextAlign.start,
-                                        textAlignVertical:
-                                            TextAlignVertical.center,
-                                        controller: phoneNumberController,
-                                        cursorColor: Colors.white,
-                                        textInputAction: TextInputAction.next,
-                                        decoration: InputDecoration(
-                                          labelText: "Phone Number",
-                                          prefixIcon: Icon(
-                                            Icons.phone,
-                                            color: Colors.black,
-                                          ),
-                                          border: InputBorder.none,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _phoneNumber = value;
+                                        });
+                                      },
+                                      cursorColor: Colors.white,
+                                      textAlign: TextAlign.start,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      controller: phoneNumberController,
+                                      textInputAction: TextInputAction.next,
+                                      decoration: InputDecoration(
+                                        labelText: "Change Phone Number",
+                                        prefixIcon: Icon(
+                                          Icons.call,
+                                          color: Colors.black54,
                                         ),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Please enter number';
-                                          }
-                                        }),
+                                        border: InputBorder.none,
+                                        suffixIcon: _phoneNumber == null ||
+                                                _phoneNumber!.trim() == ''
+                                            ? null
+                                            : IconButton(
+                                                onPressed: () {
+                                                  updatePhoneNumber();
+                                                },
+                                                icon: Icon(Icons.save)),
+                                      ),
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -127,7 +146,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   child: ListTile(
                                     tileColor: Colors.green,
                                     title: Center(
-                                        child: Text('Update',
+                                        child: Text('Update both',
                                             style: TextStyle(
                                                 color: Colors.white))),
                                   ),
@@ -201,6 +220,45 @@ class _ProfileEditState extends State<ProfileEdit> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: Colors.green,
       content: Text("updated"),
+      duration: Duration(milliseconds: 200),
+    ));
+  }
+
+  Future updateNickname() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(child: CircularProgressIndicator()));
+    final user = FirebaseAuth.instance.currentUser!;
+
+    FirebaseFirestore.instance.collection("UserData").doc(user.email).update({
+      'nickname': nicknameController.text.trim(),
+    });
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Dashboard()));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.green,
+      content: Text("Nickname updated"),
+      duration: Duration(milliseconds: 200),
+    ));
+  }
+
+  Future updatePhoneNumber() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(child: CircularProgressIndicator()));
+    final user = FirebaseAuth.instance.currentUser!;
+
+    FirebaseFirestore.instance
+        .collection("UserData")
+        .doc(user.email)
+        .update({'phoneNumber': phoneNumberController.text.trim()});
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Dashboard()));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.green,
+      content: Text("Phone Number updated"),
       duration: Duration(milliseconds: 200),
     ));
   }

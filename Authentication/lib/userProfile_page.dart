@@ -54,20 +54,6 @@ class _UserProfileState extends State<UserProfile> {
                             children: <Widget>[
                               SizedBox(height: 190),
                               // ignore: prefer_const_constructors
-                              Column(
-                                children: [
-                                  Text("Anas Rul",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                      ),
-                                      textAlign: TextAlign.start),
-                                  SizedBox(height: 10),
-                                  Text("+013-24552313",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20)),
-                                ],
-                              ),
 
                               SizedBox(height: heightSpace),
                               Card(

@@ -11,6 +11,7 @@ class BookedInfo extends StatefulWidget {
   final String futsalTitle;
   final Timestamp bookTime;
   final String courtId;
+  final int totalPayment;
 
   const BookedInfo(
       {Key? key,
@@ -18,7 +19,8 @@ class BookedInfo extends StatefulWidget {
       required this.futsalTitle,
       required this.bookTime,
       required this.courtId,
-      required this.bookId})
+      required this.bookId,
+      required this.totalPayment})
       : super(key: key);
 
   @override
@@ -123,7 +125,7 @@ class _BookedInfoState extends State<BookedInfo> {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      "Total Payment: ",
+                      "Total Payment: ${widget.totalPayment}",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ],

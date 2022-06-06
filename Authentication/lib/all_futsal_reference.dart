@@ -52,6 +52,7 @@ class AllFutsalState extends State<AllFutsal> {
         await prefs.setString('futsalTitle', futsal.futsalName);
         await prefs.setString('futsalId', futsal.id);
 
+
         Navigator.push(
           context,
           MaterialPageRoute(

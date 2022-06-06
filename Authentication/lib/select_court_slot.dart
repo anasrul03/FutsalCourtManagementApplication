@@ -4,14 +4,22 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 import 'components/gridview_slot.dart';
 
 class CourtSlot extends StatefulWidget {
   final String courtName;
+  final String courtType;
   final String imageurl;
   final String futsalTitle;
-  const CourtSlot({Key? key, required this.courtName, required this.imageurl, required this.futsalTitle}) : super(key: key);
+  final int pricePerHour;
+  const CourtSlot(
+      {Key? key,
+      required this.courtName,
+      required this.imageurl,
+      required this.futsalTitle,
+      required this.pricePerHour,
+      required this.courtType})
+      : super(key: key);
 
   @override
   State<CourtSlot> createState() => _CourtSlotState();
@@ -76,9 +84,7 @@ class _CourtSlotState extends State<CourtSlot> {
                                   fontWeight: FontWeight.w600,
                                 )),
                             SizedBox(height: 7),
-                            Text(
-                                "Your have choose Court " +
-                                    widget.courtName,
+                            Text("Your have choose Court " + widget.courtName,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18.0,
@@ -127,6 +133,10 @@ class _CourtSlotState extends State<CourtSlot> {
           ),
           SlotGrid(
             selectedDate: selectedValue,
+            futsalTitle: widget.futsalTitle,
+            pricePerHour: widget.pricePerHour,
+            courtName: widget.courtName,
+            courtType: widget.courtType,
           )
         ])));
   }

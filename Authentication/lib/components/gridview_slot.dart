@@ -6,12 +6,26 @@ import 'package:login_attemp2/components/utils.dart';
 import 'package:login_attemp2/paymentpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../constants/DateParsers.dart';
+import '../paymentTotal.dart';
+
 class SlotGrid extends StatefulWidget {
   final DateTime? selectedDate;
+  final String futsalTitle;
+  final String courtName;
+  final String courtType;
+  final int pricePerHour;
 
 //   SlotGrid({Key? key, required this.selectedDate}) : super(key: key);
 
-  const SlotGrid({Key? key, required this.selectedDate}) : super(key: key);
+  const SlotGrid(
+      {Key? key,
+      required this.selectedDate,
+      required this.futsalTitle,
+      required this.pricePerHour,
+      required this.courtName,
+      required this.courtType})
+      : super(key: key);
 
   @override
   State<SlotGrid> createState() => _SlotGridState();
@@ -143,18 +157,17 @@ class _SlotGridState extends State<SlotGrid> {
     data['futsalId'] = prefs.getString('futsalId');
     data['courtId'] = prefs.getString('courtId');
 
-    // log(startDateTime.toString());
-    // inspect(data);
     try {
-      // final bookedDate = FirebaseFirestore.instance.collection('Booked').doc();
-      // await bookedDate.set(data);
-      // currentIndex = 2;
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => Dashboard()));
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => MySample(getData: startDateTime)));
+              builder: (context) => PaymentTotal(
+                    futsalTitle: widget.futsalTitle,
+                    pricePerHour: widget.pricePerHour,
+                    selectedDate: startDateTime,
+                    courtName: widget.courtName,
+                    courtType: widget.courtType,
+                  )));
     } on FirebaseAuthException catch (e) {
       print(e);
 

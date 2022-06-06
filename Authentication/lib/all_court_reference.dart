@@ -61,11 +61,13 @@ class _AllCourtState extends State<AllCourt> {
         final prefs = await SharedPreferences.getInstance();
         // Try reading data from the 'action key. If it doesn't exist, returns null.
         prefs.setString('courtId', court.courtName);
+        prefs.setInt('price', court.price);
         final Map<String, dynamic> data = new Map<String, dynamic>();
         data['courtId'] = prefs.getString('courtId');
+        // data['price'] = prefs.getString('price');
 
         log(court.courtName);
-        ;
+        final price = int.parse(court.price.toString());
 
         Navigator.push(
           context,
@@ -74,6 +76,7 @@ class _AllCourtState extends State<AllCourt> {
                     courtName: court.courtName,
                     futsalTitle: widget.futsalTitle,
                     imageurl: widget.imageURL,
+                    pricePerHour: court.price, courtType: court.courtType,
                   )),
         );
       },

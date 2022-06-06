@@ -3,23 +3,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dashboard.dart';
 
-class MySample extends StatefulWidget {
+class PaymentCardPage extends StatefulWidget {
   late DateTime? getData;
-
-  MySample({
+  final int priceTotal;
+  PaymentCardPage({
     Key? key,
-    this.getData,
+    required this.getData,
+    required this.priceTotal,
   }) : super(key: key);
 
   @override
-  State<MySample> createState() => MySampleState();
+  State<PaymentCardPage> createState() => PaymentCardPageState();
 }
 
-class MySampleState extends State<MySample> {
+class PaymentCardPageState extends State<PaymentCardPage> {
   String cardNumber = '';
   String expiryDate = '';
   String cardHolderName = '';
@@ -45,12 +47,12 @@ class MySampleState extends State<MySample> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Credit Card View Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          backgroundColor: Colors.blueGrey[900],
+          title: Text("Payment", style: GoogleFonts.lato()),
+        ),
         resizeToAvoidBottomInset: false,
         body: Container(
           decoration: BoxDecoration(
@@ -79,7 +81,7 @@ class MySampleState extends State<MySample> {
                   obscureCardNumber: true,
                   obscureCardCvv: true,
                   isHolderNameVisible: true,
-                  cardBgColor: Colors.red,
+                  cardBgColor: Colors.blueGrey,
                   backgroundImage: useBackgroundImage
                       ? 'lib/assets/images/card_bg.png'
                       : null,
@@ -215,6 +217,7 @@ class MySampleState extends State<MySample> {
     final prefs = await SharedPreferences.getInstance();
 
     var endDateTime = widget.getData?.add(Duration(hours: 1));
+    data['totalPayment'] = widget.priceTotal;
     data['startDate'] = widget.getData;
     data['endDate'] = endDateTime;
     data['createdDate'] = DateTime.now().toString();
@@ -235,6 +238,7 @@ class MySampleState extends State<MySample> {
             .collection('Booked')
             .doc(id)
             .set({
+          "paymentTotal": widget.priceTotal,
           "startDate": widget.getData,
           'endDate': endDateTime,
           'createdDate': DateTime.now().toString(),
@@ -247,6 +251,7 @@ class MySampleState extends State<MySample> {
         });
       // ignore: avoid_single_cascade_in_expression_statements
       FirebaseFirestore.instance.collection("BookedListFromUser").doc(id).set({
+        "paymentTotal": widget.priceTotal,
         "startDate": widget.getData,
         'endDate': endDateTime,
         'createdDate': DateTime.now().toString(),
@@ -260,17 +265,5 @@ class MySampleState extends State<MySample> {
     } catch (e) {
       print(e);
     }
-
-    // final bookedDate = FirebaseFirestore.instance
-    //     .collection('UserData')
-    //     .doc(user.email)
-    //     .collection("Booked")
-    //     .doc()
-    //     .set(data);
-
-    // final paid = FirebaseFirestore.instance
-    //     .collection('BookedListFromUser')
-    //     .doc()
-    //     .set(data);
   }
 }

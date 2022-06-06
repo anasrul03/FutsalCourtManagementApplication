@@ -43,7 +43,6 @@ class _BookedListState extends State<BookedList> {
           },
         ));
   }
-
 }
 
 Widget buildLists(data, uid, context) => GestureDetector(
@@ -58,6 +57,7 @@ Widget buildLists(data, uid, context) => GestureDetector(
                     courtId: data.courtId,
                     futsalTitle: data.futsalTitle,
                     bookTime: data.startDate,
+                    totalPayment: data.totalPayment,
                   )),
         );
       },
@@ -94,8 +94,6 @@ Widget buildLists(data, uid, context) => GestureDetector(
       ),
     );
 
-
-
 class Book {
   String? bookId;
   Timestamp? startDate;
@@ -105,18 +103,18 @@ class Book {
   String? futsalId;
   String? courtId;
   String? futsalTitle;
+  int? totalPayment;
 
-  Book({
-    this.bookId,
-    this.startDate,
-    this.endDate,
-    this.userId,
-    this.userEmail,
-    this.futsalId,
-    this.courtId,
-    this.futsalTitle,
-  });
-
+  Book(
+      {this.bookId,
+      this.startDate,
+      this.endDate,
+      this.userId,
+      this.userEmail,
+      this.futsalId,
+      this.courtId,
+      this.futsalTitle,
+      this.totalPayment});
 
   String toRawJson() => json.encode(toJson());
 
@@ -126,6 +124,7 @@ class Book {
   }
 
   factory Book.fromJson(Map<String, dynamic> json) => Book(
+        totalPayment: json["paymentTotal"],
         bookId: json["id"],
         startDate: json["startDate"],
         courtId: json["courtId"],
