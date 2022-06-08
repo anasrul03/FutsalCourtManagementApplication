@@ -146,9 +146,7 @@ class _SlotGridState extends State<SlotGrid> {
 
   sendDateTime(startDateTime) async {
     final prefs = await SharedPreferences.getInstance();
-
     var endDateTime = startDateTime.add(Duration(hours: 1));
-
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['startDate'] = this.startDateTime;
     data['endDate'] = endDateTime;
@@ -156,7 +154,6 @@ class _SlotGridState extends State<SlotGrid> {
     data['userId'] = prefs.getString('userId');
     data['futsalId'] = prefs.getString('futsalId');
     data['courtId'] = prefs.getString('courtId');
-
     try {
       Navigator.push(
           context,
@@ -170,7 +167,6 @@ class _SlotGridState extends State<SlotGrid> {
                   )));
     } on FirebaseAuthException catch (e) {
       print(e);
-
       Utils.showSnackBar(e.message);
     }
   }

@@ -50,8 +50,6 @@ class _FavoriteListState extends State<FavoriteList> {
         // final prefs = await SharedPreferences.getInstance();
         // // Save an String value to 'action' key.
         // await prefs.setString('futsalId', futsal.id);
-        print("is pressed");
-
         Navigator.push(
           context,
           MaterialPageRoute(

@@ -138,20 +138,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                               ),
 
                               SizedBox(height: heightSpace),
-                              Card(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    updateData();
-                                  },
-                                  child: ListTile(
-                                    tileColor: Colors.green,
-                                    title: Center(
-                                        child: Text('Update both',
-                                            style: TextStyle(
-                                                color: Colors.white))),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
