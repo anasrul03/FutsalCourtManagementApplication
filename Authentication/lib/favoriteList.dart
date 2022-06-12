@@ -57,7 +57,7 @@ class _FavoriteListState extends State<FavoriteList> {
                     futsalIdFav: data.futsalId,
                     futsalAddress: data.futsalAddress,
                     futsalTitle: data.futsalTitle,
-                    imageurl: data.imageurl,
+                    imageurl: data.imageURL,
                   )),
         );
       },
@@ -204,8 +204,10 @@ class Favorite {
   final String imageURL;
   final String address;
   final String futsalTitle;
+  final String futsalAddress;
 
   Favorite({
+    required this.futsalAddress,
     required this.futsalTitle,
     required this.futsalId,
     required this.userId,
@@ -225,6 +227,7 @@ class Favorite {
         imageURL: json['imageURL'],
         address: json['address'],
         futsalTitle: json['futsalTitle'],
+        futsalAddress: json['address'],
       );
   Map<String, dynamic> toJson() => {
         "futsalId": futsalId,

@@ -117,8 +117,11 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   border: InputBorder.none,
                 ),
                 // autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (nikcname) =>
-                    nikcname != null ? "Please enter your nickname" : null,
+                validator: (nickname) { if (nickname == null || nickname.isEmpty) {
+                      return "Please enter Nickname";
+                    } else {
+                      return null;
+                    }},
               ),
             ),
             SizedBox(height: 4),
@@ -127,26 +130,30 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               borderRadius: BorderRadius.circular(30.0),
               shadowColor: Color(0x55434343),
               child: TextFormField(
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-                textAlign: TextAlign.start,
-                textAlignVertical: TextAlignVertical.center,
-                controller: phoneNumberController,
-                cursorColor: Colors.white,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  labelText: "Phone Number",
-                  prefixIcon: Icon(
-                    Icons.phone,
-                    color: Colors.black54,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  textAlign: TextAlign.start,
+                  textAlignVertical: TextAlignVertical.center,
+                  controller: phoneNumberController,
+                  cursorColor: Colors.white,
+                  textInputAction: TextInputAction.next,
+                  decoration: InputDecoration(
+                    labelText: "Phone Number",
+                    prefixIcon: Icon(
+                      Icons.phone,
+                      color: Colors.black54,
+                    ),
+                    border: InputBorder.none,
                   ),
-                  border: InputBorder.none,
-                ),
-                validator: (value) =>
-                    value != null ? 'Enter your phone number please' : null,
-              ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter Phone Number";
+                    } else {
+                      return null;
+                    }
+                  }),
             ),
             SizedBox(height: 4),
             Material(
@@ -209,10 +216,10 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       return;
     }
 
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => Center(child: CircularProgressIndicator()));
+    // showDialog(
+    //     context: context,
+    //     barrierDismissible: false,
+    //     builder: (context) => Center(child: CircularProgressIndicator()));
 
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
