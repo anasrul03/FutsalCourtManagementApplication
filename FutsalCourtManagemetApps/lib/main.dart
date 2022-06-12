@@ -16,8 +16,7 @@ Future main() async {
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-//testsadasd
-//asdas
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
